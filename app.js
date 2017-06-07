@@ -4,12 +4,18 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var flash = require('connect-flash');
+var session = require('express-session');
+var validator = require('express-validator');
 var expressHbs = require('express-handlebars');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
+var user = require('./routes/user');
 
 var app = express();
+mongoose.connect(process.env.ARCADIAA_MLAB_URI);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,10 +32,30 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(validator());
+app.use(session({
+    secret: 'mySecretKey',
+    resave: false,
+    saveUninitialized: false,
+    // cookie expires in 3 hour
+    cookie: {
+        maxAge: 180 * 60 * 1000
+    }
+}));
+// flash needs the session, so we place this piece of code just after app.use(session())
+app.use(flash());
+app.use(passport.initialize());
+app.use(passport.session());
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+app.use('/user', user);
+
+// redirect all unmatched routes to homepage
+app.get('*', function(req, res, next) {
+    res.redirect('/')
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
