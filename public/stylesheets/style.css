@@ -1,8 +1,18 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+footer h5 {
+  text-align: center;
 }
 
-a {
-  color: #00B7FF;
+* {
+  font-family: Amiko;
+}
+
+#github-icon {
+  display: block;
+  text-align: center;
+  color: black;
+  transition: transform 0.7s;
+}
+
+#github-icon:hover {
+  transform: scale(1.15);
 }
