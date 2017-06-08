@@ -17,6 +17,8 @@ var user = require('./routes/user');
 var app = express();
 mongoose.connect(process.env.ARCADIAA_MLAB_URI);
 
+require('./config/passport');
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
@@ -31,8 +33,8 @@ app.set('view engine', 'hbs');
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(validator());
+app.use(cookieParser());
 app.use(session({
     secret: 'mySecretKey',
     resave: false,
@@ -48,6 +50,16 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+// We store in local variables if the user has logged in. Will be useful for the navbar
+app.use(function(req, res, next) {
+    res.locals.login = req.isAuthenticated();
+    res.locals.session = req.session;
+    if (req.isAuthenticated()) {
+        res.locals.username = req.user.username;
+    }
+    next();
+});
 
 app.use('/', index);
 app.use('/user', user);

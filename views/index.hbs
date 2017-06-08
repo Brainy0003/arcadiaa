@@ -1,2 +1,12 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+{{#if hasMessages }}
+<div class="alert alert-info alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{#each messages}}
+            <p class="text-center">
+                {{this}}
+            </p>
+        {{/each}}
+    </div>
+{{/if}}
+
+Welcome to ArcadiaA !

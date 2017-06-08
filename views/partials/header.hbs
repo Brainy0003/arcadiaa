@@ -8,8 +8,13 @@
           <li><a href="/chat"><i class="fa fa-commenting-o" aria-hidden="true"></i> Chat</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="/user/signin"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a></li>
-          <li><a href="/user/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
+          {{#if login}}
+              <li><a href="/user/profile"><i class="fa fa-user-o" aria-hidden="true"></i> {{ username }}</a></li>
+              <li><a href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a></li>
+              {{ else }}
+              <li><a href="/user/signin"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a></li>
+              <li><a href="/user/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
+          {{/if}}
         </ul>
     </div>
 </nav>
