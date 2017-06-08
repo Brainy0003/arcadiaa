@@ -1,10 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
   var messages = req.flash('info');
-
   res.render('index', {
     title: 'Express',
     messages: messages,
@@ -21,11 +19,11 @@ router.get('/chat/:newMessage', function(req, res, next) {
 });
 
 function isLoggedIn(req, res, next) {
-    // isAuthenticated is added by passport
-    if (req.isAuthenticated()) {
-        return next(); // Equivalent to continue
-    }
-    res.redirect('/user/signin');
+  // isAuthenticated is added by passport
+  if (req.isAuthenticated()) {
+    return next(); // Equivalent to continue
+  }
+  res.redirect('/user/signin');
 }
 
 module.exports = router;

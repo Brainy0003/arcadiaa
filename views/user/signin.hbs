@@ -3,8 +3,8 @@
 
   <!-- POSSIBLE ERRORS -->
   {{#if hasErrors}}
-  <div class="alert alert-danger alert-dismissible" role="alert">
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <div class="alert alert-danger alert-dismissible" role="alert">
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       {{#each messages}}
         <p class="text-center">
           {{this}}
@@ -14,7 +14,6 @@
   {{/if}}
   <hr>
 
-  <!-- FIELDS AND BUTTONS -->
   <div class="form-group">
     <label for="usernmame">Username</label>
     <input type="text" class="form-control" id="username" name="username">
@@ -36,6 +35,6 @@
     <!-- Nest <a> tag into <p> to center it-->
     <p class="text-center"><a href="/user/signin">No account? Click here!</a></p>
   </div>
-  <!-- To prevent from csurf attacks -->
+  <!-- Contains the CSRF token -->
   <input type="hidden" name="_csrf" value="{{ csrfToken }}">
 </form>

@@ -9,17 +9,4 @@
   </div>
 </form>
 
-<script>
-  var socket = io();
-  $.get('/api/', function(data) {
-    socket.emit('newUser', data.username);
-  });
-  socket.on('chat message', function(msg) {
-    $("#messages-list").append("<li class='list-group-item'>" + msg + "</li>");
-  });
-  $('form').submit(function() {
-    socket.emit('newMessage', $("#message").val());
-    $("#message").val('');
-    return false;
-  });
-</script>
+<script src="/javascripts/chat.js"></script>
