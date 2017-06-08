@@ -1,0 +1,25 @@
+<ul class="list-group" id="messages-list"></ul>
+
+<form action="">
+  <div class="input-group">
+    <input type="text" class="form-control" id="message">
+    <span class="input-group-btn">
+        <button class="btn btn-primary" type="submit" id="submit"><i class="fa fa-send"></i></button>
+   </span>
+  </div>
+</form>
+
+<script>
+  var socket = io();
+  $.get('/api/', function(data) {
+    socket.emit('newUser', data.username);
+  });
+  socket.on('chat message', function(msg) {
+    $("#messages-list").append("<li class='list-group-item'>" + msg + "</li>");
+  });
+  $('form').submit(function() {
+    socket.emit('newMessage', $("#message").val());
+    $("#message").val('');
+    return false;
+  });
+</script>

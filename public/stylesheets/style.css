@@ -20,3 +20,13 @@ footer h6 {
 #github-icon:hover {
   transform: scale(1.15);
 }
+
+#messages-list {
+  height: 80%;
+  overflow: scroll;
+}
+
+form {
+  position: fixed;
+  bottom: 10px;
+}

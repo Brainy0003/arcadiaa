@@ -12,4 +12,20 @@ router.get('/', function(req, res, next) {
   });
 });
 
+router.get('/chat', isLoggedIn, function(req, res, next) {
+  res.render('chat');
+});
+
+router.get('/chat/:newMessage', function(req, res, next) {
+  res.io.to('chat').emit('newMessage', req.params.newMessage);
+});
+
+function isLoggedIn(req, res, next) {
+    // isAuthenticated is added by passport
+    if (req.isAuthenticated()) {
+        return next(); // Equivalent to continue
+    }
+    res.redirect('/user/signin');
+}
+
 module.exports = router;

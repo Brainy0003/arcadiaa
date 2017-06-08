@@ -9,7 +9,7 @@ router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
     var messages = req.flash('success');
-    // Username is stored by passport in req.user.username
+    // Username  is stored by passport in req.user.username
     res.render('user/profile', {
         hasMessages: messages.length > 0,
         messages: messages,
