@@ -1,14 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var csrf = require('csurf');
 var passport = require('passport');
 var User = require('../models/user');
 var isLoggedIn = require('../utils/login').isLoggedIn;
 var notLoggedIn = require('../utils/login').notLoggedIn;
-
-// Protect from CSRF attacks
-var csrfProtection = csrf();
-router.use(csrfProtection);
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
   var messages = req.flash('success');
@@ -28,7 +23,6 @@ router.get('/logout', isLoggedIn, function(req, res, next) {
 router.get('/signup', notLoggedIn, function(req, res, next) {
   var messages = req.flash('error');
   res.render('user/signup', {
-    csrfToken: req.csrfToken(),
     messages: messages,
     hasErrors: messages.length > 0
   });
@@ -43,7 +37,6 @@ router.post('/signup', passport.authenticate('local.signup', {
 router.get('/signin', notLoggedIn, function(req, res, next) {
   var messages = req.flash('error');
   res.render('user/signin', {
-    csrfToken: req.csrfToken(),
     messages: messages,
     hasErrors: messages.length > 0
   });
@@ -54,5 +47,16 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect: '/user/signin',
   failureFlash: true
 }));
+
+router.get('/delete', isLoggedIn, function(req, res, next) {
+  User.findByIdAndRemove(req.user._id, function(err, user) {
+    if (err) {
+      return next(err);
+    } else {
+      req.flash('info', 'Votre compte a bien été supprimé. A bientôt !');
+      res.redirect('/');
+    }
+  });
+});
 
 module.exports = router;
