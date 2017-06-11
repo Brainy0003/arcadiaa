@@ -9,13 +9,18 @@ var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
 var validator = require('express-validator');
+var helmet = require('helmet');
 var expressHbs = require('express-handlebars');
 
 var index = require('./routes/index');
 var user = require('./routes/user');
 var api = require('./routes/api');
+var chat = require('./routes/chat');
 
 var app = express();
+
+app.use(helmet());
+
 app.io = require('socket.io')();
 
 // connect to DB
@@ -47,7 +52,6 @@ app.use(session({
     maxAge: 180 * 60 * 1000
   }
 }));
-
 // flash needs the session, so we place this piece of code just after app.use(session())
 app.use(flash());
 app.use(passport.initialize());
@@ -66,11 +70,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/user', user);
 app.use('/api', api);
-
-// redirect all unmatched routes to home
-app.get('*', function(req, res, next) {
-  res.redirect('/')
-});
+app.use('/chat', chat)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

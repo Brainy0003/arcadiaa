@@ -4,16 +4,17 @@
       <a class="navbar-brand" href="/">ArcadiaA</a>
     </div>
     <ul class="nav navbar-nav">
-      <li><a href="/activity"><i class="fa fa-line-chart" aria-hidden="true"></i> Activity</a></li>
+      <li><a href="/activity"><i class="fa fa-line-chart" aria-hidden="true"></i> Activité</a></li>
       <li><a href="/chat"><i class="fa fa-commenting-o" aria-hidden="true"></i> Chat</a></li>
+      <li><a href="/polls"><i class="fa fa-bar-chart-o" aria-hidden="true"></i> Sondages</a></li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       {{#if login}}
         <li><a href="/user/profile"><i class="fa fa-user-o" aria-hidden="true"></i> {{ username }}</a></li>
-        <li><a href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Sign Out</a></li>
+        <li><a href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
         {{ else }}
-        <li><a href="/user/signin"><i class="fa fa-user" aria-hidden="true"></i> Sign In</a></li>
-        <li><a href="/user/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Sign Up</a></li>
+        <li><a href="/user/signin"><i class="fa fa-user" aria-hidden="true"></i> Connexion</a></li>
+        <li><a href="/user/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
       {{/if}}
     </ul>
   </div>

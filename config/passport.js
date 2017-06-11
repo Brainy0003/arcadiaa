@@ -20,9 +20,9 @@ passport.use('local.signup', new LocalStrategy({
   passReqToCallback: true
 }, function(req, username, password, done) {
   username = username.trim().toLowerCase();
-  req.checkBody('username', 'Your username should have at least 2 characters').notEmpty().isLength({min: 2, max: 20});
-  req.checkBody('password', 'Your password must have at least 6 characters').notEmpty().isLength({min: 6});
-  req.checkBody('password2', 'Passwords are different').equals(req.body.password);
+  req.checkBody('username', 'Votre pseudo doit contenir au moins 2 caractères').notEmpty().isLength({min: 2, max: 20});
+  req.checkBody('password', 'Votre mot de passe doit contenir au moins 6 caractères').notEmpty().isLength({min: 6});
+  req.checkBody('password2', 'Vos mots de passe sont différents').equals(req.body.password);
   var errors = req.validationErrors();
   if (errors) {
     var messages = [];
@@ -39,7 +39,7 @@ passport.use('local.signup', new LocalStrategy({
       return done(err);
     }
     if (user) {
-      return done(null, false, {message: 'Username is already in use'});
+      return done(null, false, {message: 'Ce pseudo est déjà utilisé'});
     }
     // Username is not already used, then we can create a new user
     var newUser = new User();
@@ -50,7 +50,7 @@ passport.use('local.signup', new LocalStrategy({
       if (err) {
         return done(err);
       }
-      return done(null, newUser, req.flash('success', 'Successfully registered'));
+      return done(null, newUser, req.flash('success', 'Vous êtes maintenant inscrit !'));
     })
   });
 }));
@@ -60,8 +60,8 @@ passport.use('local.signin', new LocalStrategy({
   passReqToCallback: true
 }, function(req, username, password, done) {
   username = username.trim().toLowerCase();
-  req.checkBody('username', 'Invalid username').notEmpty().isLength({min: 2, max: 20});
-  req.checkBody('password', 'Invalid password').notEmpty().isLength({min: 6});
+  req.checkBody('username', 'Votre pseudo doit contenir au moins 2 caractères').notEmpty().isLength({min: 2, max: 20});
+  req.checkBody('password', 'Votre mot de passe doit contenir au moins 6 caractères').notEmpty().isLength({min: 6});
   var errors = req.validationErrors();
   if (errors) {
     var messages = [];
@@ -78,12 +78,12 @@ passport.use('local.signin', new LocalStrategy({
       return done(err);
     }
     if (!user) {
-      return done(null, false, {message: 'No user found'});
+      return done(null, false, {message: 'Aucun utilisateur trouvé...'});
     }
     if (!user.validPassword(password)) {
-      return done(null, false, {message: 'Wrong password'});
+      return done(null, false, {message: 'Mot de passe incorrect'});
     }
     // There is no errors
-    return done(null, user, req.flash('success', 'Successfully logged'));
+    return done(null, user, req.flash('success', 'Vous êtes maintenant connecté !'));
   });
 }));

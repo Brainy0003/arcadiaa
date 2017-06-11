@@ -3,6 +3,8 @@ var router = express.Router();
 var csrf = require('csurf');
 var passport = require('passport');
 var User = require('../models/user');
+var isLoggedIn = require('../utils/login').isLoggedIn;
+var notLoggedIn = require('../utils/login').notLoggedIn;
 
 // Protect from CSRF attacks
 var csrfProtection = csrf();
@@ -52,20 +54,5 @@ router.post('/signin', passport.authenticate('local.signin', {
   failureRedirect: '/user/signin',
   failureFlash: true
 }));
-
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.redirect('/');
-}
-
-function notLoggedIn(req, res, next) {
-  if (!req.isAuthenticated()) {
-    return next();
-  }
-  req.flash('info', 'Already logged');
-  res.redirect('/');
-}
 
 module.exports = router;
