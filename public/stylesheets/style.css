@@ -1,6 +1,35 @@
-html, body, .main {
-  height: 100%;
+
+
+/* CHAT */
+
+#messages {
+  margin: 0;
+  padding: 0;
 }
+
+#messages .message {
+  padding: 5px 10px;
+}
+
+#messages .alert {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#messages .author {
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
+#messages .message:nth-child(odd) {
+  background: hsl(4, 59%, 79%);
+}
+
+#messages .message:nth-child(even) {
+  background: hsl(146, 40%, 79%);
+}
+
+/* FOOTER */
 
 footer h6 {
   text-align: center;
@@ -19,14 +48,4 @@ footer h6 {
 
 #github-icon:hover {
   transform: scale(1.15);
-}
-
-#messages-list {
-  height: 80%;
-  overflow: scroll;
-}
-
-form {
-  position: fixed;
-  bottom: 10px;
 }

@@ -7,6 +7,9 @@ var notLoggedIn = require('../utils/login').notLoggedIn;
 
 router.get('/profile', isLoggedIn, function(req, res, next) {
   var messages = req.flash('success');
+  if (messages.length !== 0) {
+    res.io.to('chat').emit('connectedUser', req.user.username);
+  }
   res.render('user/profile', {
     hasMessages: messages.length > 0,
     messages: messages,
@@ -15,6 +18,7 @@ router.get('/profile', isLoggedIn, function(req, res, next) {
 });
 
 router.get('/logout', isLoggedIn, function(req, res, next) {
+  res.io.to('chat').emit('disconnectedUser', req.user.username);
   req.logout();
   req.flash('info', 'Vous êtes maintenant déconnecté');
   res.redirect('/');

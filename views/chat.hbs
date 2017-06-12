@@ -1,12 +1,17 @@
-<ul class="list-group" id="messages-list"></ul>
-
-<form action="">
-  <div class="input-group">
-    <input type="text" class="form-control" id="message">
-    <span class="input-group-btn">
-        <button class="btn btn-primary" type="submit" id="submit"><i class="fa fa-send"></i></button>
-   </span>
+<div class="row" id="chat-container">
+  <div class="col-md-12">
+    <div id="messages"></div>
+    <hr>
+    <form action="" id="message-input-form">
+      <div class="input-group">
+        <input type="text" class="form-control" id="message" placeholder="Tapez un message...">
+        <span class="input-group-btn">
+            <button class="btn btn-primary" type="submit" id="submit"><i class="fa fa-send"></i></button>
+       </span>
+      </div>
+    </form>
   </div>
-</form>
+</div>
+
 
 <script src="/javascripts/chat.js"></script>

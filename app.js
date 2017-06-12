@@ -91,12 +91,24 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
+/* SOCKET.IO Handler */
+
+var Message = require('./models/message');
+
 app.io.on('connection', function(socket) {
   socket.join('chat');
   socket.on('newMessage', function(msg) {
-    console.log('new message: ' + msg);
-    app.io.emit('chat message', msg);
+    let messageToSave = new Message(msg);
+    messageToSave.save(function(err) {
+      if (err) {
+        return err
+      } else {
+        app.io.emit('chat message', msg);
+      }
+    });
   });
 });
+
 
 module.exports = app;
