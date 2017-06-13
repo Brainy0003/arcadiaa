@@ -9,8 +9,24 @@
   </div>
 {{/if}}
 
-<h1 class="text-center">Salut, {{ username }}</h1>
-
-<form action="/user/delete" method="delete">
-  <button type="submit" class="btn btn-danger">Supprimer mon compte</button>
-</form>
+<h1 class="text-center">Salut, {{ username }}.</h1>
+<div class="row">
+  <div class="col-md-6">
+    <h2>Bienvenue sur ton profil.</h2>
+    <h4>Il est incomplet à l'heure d'aujourd'hui car Supercell n'autorise toujours pas l'accès à leurs données.</j4>
+    <h4>Mais dès que cela sera possible, tu pourras voir tes stats ici!</h4>
+  </div>
+  <div class="col-md-6">
+    <h2>Paramètres</h2>
+    <form action="/admin/chief" method="delete">
+      <div>
+        <button type="button" class="btn btn-block disabled btn-success">Je veux devenir chef</button>
+        <p class="help-block">Cette requête doit être traitée manuellement. Elle peut donc prendre un peu de temps...</p>
+      </div>
+    </form>
+    <form action="/user/delete" method="delete">
+      <button type="submit" class="btn btn-block btn-danger">Je veux supprimer mon compte</button>
+      <p class="help-block">Cette action est irréversible !</p>
+    </form>
+  </div>
+</div>
