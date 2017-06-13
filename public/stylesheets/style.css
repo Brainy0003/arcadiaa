@@ -10,6 +10,13 @@ html, body {
   height: 90%;
 }
 
+/* RULES */
+
+.chest {
+  border: 1px solid lightgray;
+  border-radius: 5px;
+}
+
 /* CHAT */
 
 #messages {
