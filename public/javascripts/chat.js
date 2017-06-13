@@ -1,5 +1,8 @@
 function addMessage(element, author, content) {
-  element.append(`<div class="message"><div class="author">${author}</div><div class="content">${content}</div></div>`)
+  element.append(`<div class="message"><div class="author">${author}</div><div class="content">${content}</div></div>`);
+  // Scroll to bottom at each message
+  let height = element[0].scrollHeight;
+  element.scrollTop(height);
 }
 
 $(document).ready(function() {
