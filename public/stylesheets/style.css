@@ -41,11 +41,7 @@ html, body {
 }
 
 #messages .message:nth-child(odd) {
-  background: hsl(4, 59%, 79%);
-}
-
-#messages .message:nth-child(even) {
-  background: hsl(146, 40%, 79%);
+  background: lightblue
 }
 
 #message-input-form {
