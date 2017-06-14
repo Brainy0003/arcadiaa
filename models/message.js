@@ -9,7 +9,8 @@ var messageSchema = new Schema({
   content: {
     type: String,
     required: true
-  }
+  },
+  date: Date
 });
 
 module.exports = mongoose.model('Message', messageSchema);
