@@ -70,7 +70,7 @@ app.use(function(req, res, next) {
 app.use('/', index);
 app.use('/user', user);
 app.use('/api', api);
-app.use('/chat', chat)
+app.use('/chat', chat);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -11,7 +11,7 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
-  type: String
+  isChief: Boolean
 });
 
 userSchema.methods.encryptPassword = function(password) {

@@ -45,6 +45,7 @@ passport.use('local.signup', new LocalStrategy({
     var newUser = new User();
     newUser.username = username
     newUser.password = newUser.encryptPassword(password);
+    newUser.isChief = false;
     // We save in
     newUser.save(function(err, result) {
       if (err) {
