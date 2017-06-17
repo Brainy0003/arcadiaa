@@ -14,6 +14,8 @@ var userSchema = new Schema({
   isChief: Boolean
 });
 
+
+// We add two methods to the schema that allows to crypt and decrypt password with bcrypt
 userSchema.methods.encryptPassword = function(password) {
   return bcrypt.hashSync(password, bcrypt.genSaltSync(5), null)
 }

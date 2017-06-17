@@ -12,6 +12,9 @@ var validator = require('express-validator');
 var helmet = require('helmet');
 var expressHbs = require('express-handlebars');
 
+/*
+Require all routes
+ */
 var index = require('./routes/index');
 var user = require('./routes/user');
 var api = require('./routes/api');
@@ -19,18 +22,32 @@ var chat = require('./routes/chat');
 
 var app = express();
 
+/*
+We use helmet to secure our app, see helmet package for more resources
+ */
 app.use(helmet());
 
 app.io = require('socket.io')();
 
-// connect to DB
+/*
+Connect to DB
+ */
 mongoose.connect(process.env.ARCADIAA_MLAB_URI);
+
+/*
+Configuration of passport
+ */
 require('./config/passport');
 
+/*
+Choose the engine that is here Handlebars
+ */
 app.engine('.hbs', expressHbs({defaultLayout: 'layout', extname: '.hbs'}));
 app.set('view engine', 'hbs');
 
-// store io to access sockets in other routes
+/*
+store socket.io to access sockets in other routes
+ */
 app.use(function(req, res, next) {
   res.io = app.io;
   next();
@@ -39,12 +56,15 @@ app.use(function(req, res, next) {
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(logger('dev'));
+/*
+Use body-parser to allow users to have form elements and its values available in req.body
+ */
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(validator());
 app.use(cookieParser());
 app.use(session({
-  secret: 'mySecretKey',
+  secret: process.env.ARCADIAA_SECRET_SESSION_KEY,
   resave: false,
   saveUninitialized: false,
   // cookie expires in 3 hour
@@ -67,6 +87,10 @@ app.use(function(req, res, next) {
   next();
 });
 
+/*
+Configures the routes
+All /user requests will be handled in users routes, etc.
+ */
 app.use('/', index);
 app.use('/user', user);
 app.use('/api', api);
@@ -99,6 +123,7 @@ var Message = require('./models/message');
 app.io.on('connection', function(socket) {
   socket.join('chat');
   socket.on('newMessage', function(msg) {
+    let currentAuthor = msg.author;
     let messageToSave = new Message(msg);
     messageToSave.save(function(err) {
       if (err) {

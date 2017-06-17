@@ -23,6 +23,7 @@ passport.use('local.signup', new LocalStrategy({
   req.checkBody('username', 'Votre pseudo doit contenir au moins 2 caractères').notEmpty().isLength({min: 2, max: 20});
   req.checkBody('password', 'Votre mot de passe doit contenir au moins 6 caractères').notEmpty().isLength({min: 6});
   req.checkBody('password2', 'Vos mots de passe sont différents').equals(req.body.password);
+  // If we get some errors, we push them into an array and display them to the user thanks to the flash middleware
   var errors = req.validationErrors();
   if (errors) {
     var messages = [];
