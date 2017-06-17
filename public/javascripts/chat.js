@@ -26,7 +26,7 @@ $(document).ready(function() {
       });
       $('form').submit(function() {
         var messageInput = $("#message");
-        if (messageInput.val().trim() !== '') {
+        if (messageInput.val().trim() !== '' && messageInput.val().trim().length < 1000) {
           socket.emit('newMessage', {
             'author': username,
             'content': messageInput.val()
