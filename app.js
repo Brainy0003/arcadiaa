@@ -28,6 +28,7 @@ We use helmet to secure our app, see helmet package for more resources
 app.use(helmet());
 
 app.io = require('socket.io')();
+require('./routes/sockets')(app.io);
 
 /*
 Connect to DB
@@ -114,26 +115,5 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
-
-
-/* SOCKET.IO Handler */
-
-var Message = require('./models/message');
-
-app.io.on('connection', function(socket) {
-  socket.join('chat');
-  socket.on('newMessage', function(msg) {
-    let currentAuthor = msg.author;
-    let messageToSave = new Message(msg);
-    messageToSave.save(function(err) {
-      if (err) {
-        return err
-      } else {
-        app.io.emit('chat message', msg);
-      }
-    });
-  });
-});
-
 
 module.exports = app;

@@ -5,42 +5,14 @@ function addMessage(element, author, content) {
   element.scrollTop(height);
 }
 
-function buildUserMessages(messages) {
-  let userMessagesContainer = $(`<div class="message"></div>`);
-  let author = messages[0].author;
-  userMessagesContainer.append(`<div class="author">${author}</div>`);
-  for (let i = 0; i < messages.length; i++) {
-    userMessagesContainer.append(`<div class="content">${messages[i].content}</div>`);
-  }
-  $("#messages").append(userMessagesContainer);
-}
-
-function buildAllMessages(messages) {
-  for (let i = 0; i < messages.length; i++) {
-    buildUserMessages(messages[i]);
-  }
-}
-
 $(document).ready(function() {
   var socket = io();
   $.get('/api/messages', function(messages) {
     let length = messages.length;
     let numberOfMessagesToShow = length > 20 ? 20 : length;
-    let previousUser = messages[length - numberOfMessagesToShow].author;
-    let allMessages = [];
-    let userMessages = []
-    for (let i = length - numberOfMessagesToShow + 1; i < length; i++) {
-      if (previousUser === messages[i].author) {
-        userMessages.push(messages[i]);
-      } else {
-        allMessages.push(userMessages);
-        userMessages = [messages[i]];
-      }
-      previousUser = messages[i].author;
+    for (let i = length - numberOfMessagesToShow; i < length; i++) {
+      addMessage($("#messages"), messages[i].author, messages[i].content);
     }
-    allMessages.push(userMessages);
-    userMessages = [];
-    buildAllMessages(allMessages);
     $.get('/api/me', function(data) {
       var username = data.username;
       socket.on('connectedUser', function(username) {
