@@ -7,8 +7,10 @@ var router = express.Router();
 /*
 Displays the chat
  */
-router.get('/', isLoggedIn, function(req, res, next) {
-  res.render('chat');
+router.get('/', isLoggedIn, function (req, res, next) {
+    res.render('chat', {
+        isChief: req.user.isChief
+    });
 });
 
 module.exports = router;
