@@ -13,6 +13,7 @@ var session = require('express-session');
 var validator = require('express-validator');
 var helmet = require('helmet');
 var expressHbs = require('express-handlebars');
+var sassMiddleware = require('node-sass-middleware');
 
 /*
 Require all routes
@@ -58,6 +59,15 @@ app.use(function (req, res, next) {
     res.io = app.io;
     next();
 });
+
+app.use(
+    sassMiddleware({
+        src: __dirname + '/sass',
+        dest: __dirname + '/public',
+        debug: true,
+        outputStyle: 'compressed'
+    })
+);
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(express.static(path.join(__dirname, 'public')));

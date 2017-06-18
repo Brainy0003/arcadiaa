@@ -1,0 +1,62 @@
+/* GENERAL RULES */
+
+html,
+body {
+    height: 100%;
+}
+
+* {
+    font-family: Amiko;
+}
+
+.main {
+    height: 85%;
+}
+
+
+/* RULES */
+
+.chest {
+    border: 1px solid lightgray;
+    border-radius: 5px;
+}
+
+
+/* CHAT */
+
+#messages {
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    height: 90%;
+}
+
+#messages .message {
+    padding: 5px 10px;
+}
+
+#messages .alert {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#messages .author {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+#messages .message:nth-child(odd) {
+    background: lightblue
+}
+
+#message-input-form {
+    margin-top: 10px;
+}
+
+
+/* SIGNIN AND SIGNUP */
+
+.sign-form {
+    border: 1px solid lightgrey;
+    border-radius: 5px;
+}
