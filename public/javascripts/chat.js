@@ -3,8 +3,10 @@
 $(document).ready(function () {
 
     /* Helpers functions */
-    function addMessage(element, author, content) {
-        element.append(`<div class="message"><div class="author">${author}</div><div class="content">${content}</div></div>`);
+    function addMessage(element, author, content, date) {
+        moment.locale('fr');
+        date = moment(date).format('DD MMM HH:mm');
+        element.append(`<div class="message"><div class="author">${author} <span class='pull-right'>${date}</span></div><div class="content">${content} </div></div>`);
         // Scroll to bottom at each message
         let height = element[0].scrollHeight;
         element.scrollTop(height);
@@ -21,7 +23,7 @@ $(document).ready(function () {
             let length = messages.length;
             let numberOfMessagesToShow = length > nbMessages ? nbMessages : length;
             for (let i = length - numberOfMessagesToShow; i < length; i++) {
-                addMessage($("#messages"), messages[i].author, messages[i].content);
+                addMessage($("#messages"), messages[i].author, messages[i].content, messages[i].date);
             }
         });
     }
@@ -55,7 +57,7 @@ $(document).ready(function () {
             $("#messages").append(`<div class="alert alert-info"><p class="text-center">${username} s'est déconnecté.</p></div>`);
         });
         chat.on('chat message', function (message) {
-            addMessage($("#messages"), message.author, message.content);
+            addMessage($("#messages"), message.author, message.content, message.date);
         });
         chat.on('updatePage', function (room) {
             addAllMessages(room, 20);
@@ -68,8 +70,7 @@ $(document).ready(function () {
             if (messageInput.val().trim() !== '' && messageInput.val().trim().length < 1000) {
                 chat.emit('newMessage', {
                     'author': username,
-                    'content': messageInput.val(),
-                    'date': Date.now()
+                    'content': messageInput.val()
                 });
             }
             messageInput.val('');

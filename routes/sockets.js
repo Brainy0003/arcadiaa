@@ -25,6 +25,7 @@ module.exports = function (io) {
         });
         socket.on('newMessage', function (msg) {
             msg.room = socket.room;
+            msg.date = Date.now();
             let messageToSave = new Message(msg);
             messageToSave.save(function (err) {
                 if (err) {
