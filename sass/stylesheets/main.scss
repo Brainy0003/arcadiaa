@@ -1,5 +1,6 @@
 /* GENERAL RULES */
 
+$darkMidnightBlue: #004d99;
 html,
 body {
     height: 100%;
@@ -10,7 +11,7 @@ body {
 }
 
 .main {
-    height: 85%;
+    height: 90%;
 }
 
 
@@ -28,29 +29,50 @@ body {
     margin: 0;
     padding: 0;
     overflow-y: scroll;
-    height: 90%;
+    height: 82%;
+    border: 1px solid whitesmoke;
+    border-radius: 5px;
+    .message {
+        padding: 5px 10px;
+    }
+    .alert {
+        margin: 7px 0px;
+    }
+    .author {
+        font-size: 1.1em;
+        font-weight: bold;
+    }
+    .message:nth-child(odd) {
+        background-color: $darkMidnightBlue;
+        color: white;
+    }
 }
 
-#messages .message {
-    padding: 5px 10px;
-}
-
-#messages .alert {
-    margin-top: 5px;
-    margin-bottom: 5px;
-}
-
-#messages .author {
-    font-size: 1.1em;
+#isTyping {
     font-weight: bold;
-}
-
-#messages .message:nth-child(odd) {
-    background: lightblue
+    color: grey;
 }
 
 #message-input-form {
     margin-top: 10px;
+}
+
+
+/* The animation code */
+
+.newMessage {
+    animation-name: appear;
+    animation-duration: 0.7s;
+    animation-timing-function: ease-in-out;
+}
+
+@keyframes appear {
+    0% {
+        transform: scale(0);
+    }
+    100% {
+        transform: scale(1);
+    }
 }
 
 
