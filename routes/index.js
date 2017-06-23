@@ -16,8 +16,4 @@ router.get('/polls', function(req, res, next) {
   res.render('beta');
 });
 
-router.get('/activity', function(req, res, next) {
-  res.render('beta');
-});
-
 module.exports = router;

@@ -29,14 +29,11 @@ body {
     margin: 0;
     padding: 0;
     overflow-y: scroll;
-    height: 82%;
+    height: 80%;
     border: 1px solid whitesmoke;
     border-radius: 5px;
     .message {
         padding: 5px 10px;
-    }
-    .alert {
-        margin: 7px 0px;
     }
     .author {
         font-size: 1.1em;
@@ -48,21 +45,23 @@ body {
     }
 }
 
+.isTypingContainer {
+  margin: 10px 0px;
+}
+
 #isTyping {
     font-weight: bold;
     color: grey;
 }
 
-#message-input-form {
-    margin-top: 10px;
+#messageInput {
+    resize: none;
 }
 
 
-/* The animation code */
-
 .newMessage {
     animation-name: appear;
-    animation-duration: 0.7s;
+    animation-duration: 0.6s;
     animation-timing-function: ease-in-out;
 }
 

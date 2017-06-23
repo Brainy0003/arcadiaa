@@ -10,10 +10,6 @@ module.exports = function (io) {
             socket.room = 'general';
             socket.join(socket.room);
             socket.username = username;
-            socket.broadcast.to(socket.room).emit('joinChat', username);
-        });
-        socket.on('disconnect', function () {
-            socket.broadcast.to(socket.room).emit('leaveChat', socket.username);
         });
         socket.on('switchRoom', function (newRoom) {
             socket.leave(socket.room);
@@ -31,6 +27,7 @@ module.exports = function (io) {
                     return err;
                 } else {
                     io.to(socket.room).emit('chatMessage', msg);
+                    socket.broadcast.to(socket.room).emit('stoppedTyping');
                 }
             });
         });

@@ -1,25 +1,23 @@
 {{#if isChief}}
-<ol class="breadcrumb">
+  <ol class="breadcrumb">
     <li><a href="#" id="general">Général</a></li>
     <li><a href="#" id="chief">Le chat des Chefs</a></li>
-</ol>
+  </ol>
 {{/if}}
 
 <div id="messages">
 </div>
 
-<div style="margin-top: 10px">
-    <span class="small" id="isTyping">
+<div class="isTypingContainer">
+  <span class="small" id="isTyping">
 </span>
 </div>
 
 <form action="" id="message-input-form">
-    <div class="input-group">
-        <input type="text" class="form-control" id="messageInput" placeholder="Tapez un message...">
-        <span class="input-group-btn">
-            <button class="btn btn-primary" type="submit" id="submit"><i class="fa fa-send"></i></button>
-       </span>
-    </div>
+  <div class="input-group">
+    <textarea class="form-control custom-control" id="messageInput" placeholder="Tapez un message..."></textarea>
+    <span class="input-group-addon btn btn-primary" id="sendMessage"><i class="fa fa-send"></i> Envoyer</span>
+  </div>
 </form>
 
 <script src="/javascripts/chat.js"></script>
