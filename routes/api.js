@@ -18,7 +18,7 @@ router.get('/me', function (req, res, next) {
 Returns all messages from the database
 */
 router.get('/messages', function (req, res, next) {
-    Message.find({}, function (err, messages) {
+    Message.find({}).sort('date').exec(function (err, messages) {
         if (err) {
             throw err;
         }

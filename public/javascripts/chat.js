@@ -16,7 +16,6 @@ $(document).ready(function() {
     element.scrollTop(height);
   }
 
-
   function addAllMessages(room, nbMessages) {
     $.get(`/api/messages/${room}`, function(messages) {
       $("#messages").empty();
@@ -35,17 +34,11 @@ $(document).ready(function() {
   var chat = io();
   addAllMessages('general', 25);
 
-  /* Switch on chief room when user clicks on <a> tag */
-  $("#chief").on('click', function() {
-    switchRoom('chief');
+  $(".switch").on('click', function() {
+    switchRoom(this.id);
   });
 
-  /* Switch on general room when user clicks on <a> tag */
-  $("#general").on('click', function() {
-    switchRoom('general');
-  });
-
-  $("#messageInput").keypress(function(e) {
+  $("#messageInput").on('keypress', function(e) {
     if (e.which == 13 && !e.shiftKey) {
       $("#message-input-form").submit();
       $(this).val('').focus();
@@ -54,9 +47,9 @@ $(document).ready(function() {
   });
 
   $("#sendMessage").on('click', function() {
-      $("#message-input-form").submit();
-      $("#messageInput").val('').focus();
-      return false;
+    $("#message-input-form").submit();
+    $("#messageInput").val('').focus();
+    return false;
   });
 
   // Get connected username
@@ -77,6 +70,12 @@ $(document).ready(function() {
     });
     chat.on('stoppedTyping', function(username) {
       $("#isTyping").text('');
+    });
+    chat.on('connectedUsers', function(connectedUsers) {
+      $("#connectedUsers").html('');
+      for (let i = 0; i < connectedUsers.length; i++) {
+        $("#connectedUsers").append(`<li class='list-group-item list-group-item-success'>${connectedUsers[i]}</li>`);
+      }
     });
 
     // Emitting events

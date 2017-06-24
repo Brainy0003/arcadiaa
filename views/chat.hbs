@@ -1,23 +1,31 @@
-{{#if isChief}}
-  <ol class="breadcrumb">
-    <li><a href="#" id="general">Général</a></li>
-    <li><a href="#" id="chief">Le chat des Chefs</a></li>
-  </ol>
-{{/if}}
-
-<div id="messages">
-</div>
-
-<div class="isTypingContainer">
-  <span class="small" id="isTyping">
-</span>
-</div>
-
-<form action="" id="message-input-form">
-  <div class="input-group">
-    <textarea class="form-control custom-control" id="messageInput" placeholder="Tapez un message..."></textarea>
-    <span class="input-group-addon btn btn-primary" id="sendMessage"><i class="fa fa-send"></i> Envoyer</span>
+<div class="row chat-container">
+  <div class="col-md-10 messages-container">
+    <div id="messages">
+    </div>
+    <div class="isTypingContainer">
+      <span class="small" id="isTyping">
+    </span>
+    </div>
+    <form action="" id="message-input-form">
+      <div class="input-group">
+        <textarea class="form-control custom-control" id="messageInput" placeholder="Tapez un message..."></textarea>
+        <span class="input-group-addon btn btn-primary" id="sendMessage"><i class="fa fa-send"></i> Envoyer</span>
+      </div>
+    </form>
   </div>
-</form>
+  <div class="col-md-2">
+    <h4>Utilisateurs connectés</h4>
+    <ul class="list-group" id="connectedUsers">
+    </ul>
+    <h4>Autres salles</h4>
+    <ul class="list-group">
+      <li class="list-group-item"><a href="#" class="switch" id="general">Général</a></li>
+      <li class="list-group-item"><a href="#" class="switch" id="deck">Parlons peu, parlons decks</a></li>
+      {{#if isChief}}
+        <li class="list-group-item"><a href="#" class="switch" id="chief">Le chat des Chefs</a></li>
+      {{/if}}
+    </ul>
+  </div>
+</div>
 
 <script src="/javascripts/chat.js"></script>
