@@ -1,0 +1,37 @@
+<div class="row">
+  <form class="col-sm-6 col-sm-offset-3 sign-form" action="/auth/signin" method="post">
+    <h2>Connexion</h2>
+
+    <!-- POSSIBLE ERRORS -->
+    {{#if hasErrors}}
+      <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{#each messages}}
+          <p class="text-center">
+            {{this}}
+          </p>
+        {{/each}}
+      </div>
+    {{/if}}
+    <hr>
+
+    <div class="form-group">
+      <label for="usernmame">Pseudo</label>
+      <input type="text" class="form-control" id="username" name="username">
+    </div>
+    <div class="form-group">
+      <label for="password">Mot de passe</label>
+      <input type="password" class="form-control" id="password" name="password">
+    </div>
+    <button type="submit" class="btn btn-block btn-primary">Valider</button>
+    <div>
+      <hr>
+      <!-- Nest <a> tag into <p> to center it-->
+      <p class="text-center"><a href="/auth/signup">Pas de compte? Cliquez ici!</a></p>
+    </div>
+  </form>
+  <div class="col-sm-6 col-sm-offset-3">
+    <p class="or text-center">OU</p>
+    <a href="/auth/google" class="btn btn-block btn-google"><i class="fa fa-google"></i> Se connecter avec Google</a>
+  </div>
+</div>

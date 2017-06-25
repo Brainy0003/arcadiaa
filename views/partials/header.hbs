@@ -17,10 +17,10 @@
       <ul class="nav navbar-nav navbar-right">
         {{#if login}}
           <li><a href="/user/profile"><i class="fa fa-user-o" aria-hidden="true"></i> {{ username }}</a></li>
-          <li><a href="/user/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
+          <li><a href="/auth/logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Déconnexion</a></li>
           {{ else }}
-          <li><a href="/user/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
-          <li><a href="/user/signin"><i class="fa fa-user" aria-hidden="true"></i> Connexion</a></li>
+          <li><a href="/auth/signup"><i class="fa fa-user-plus" aria-hidden="true"></i> Inscription</a></li>
+          <li><a href="/auth/signin"><i class="fa fa-user" aria-hidden="true"></i> Connexion</a></li>
         {{/if}}
       </ul>
     </div>

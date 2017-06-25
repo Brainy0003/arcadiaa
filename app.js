@@ -22,6 +22,7 @@ var index = require('./routes/index');
 var user = require('./routes/user');
 var api = require('./routes/api');
 var chat = require('./routes/chat');
+var auth = require('./routes/auth');
 
 var app = express();
 
@@ -110,6 +111,7 @@ Configures the routes
 All /user requests will be handled in users routes, etc.
  */
 app.use('/', index);
+app.use('/auth', auth);
 app.use('/user', user);
 app.use('/api', api);
 app.use('/chat', chat);
