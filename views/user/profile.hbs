@@ -41,8 +41,14 @@
       </div>
       <div class="modal-footer">
         <form action="/user/delete" method="delete">
-          <button type="button" class="btn btn-success" data-dismiss="modal">Tout compte fait...</button>
-          <button type="submit" class="btn btn-danger" id="buttonDeleteAccount">Je veux supprimer mon compte!</button>
+          <div class="btn-group btn-group-justified" role="group">
+            <div class="btn-group" role="group">
+              <button type="button" class="btn btn-success" data-dismiss="modal">Tout compte fait...</button>
+            </div>
+            <div class="btn-group" role="grid">
+              <button type="submit" class="btn btn-danger" id="buttonDeleteAccount">Je veux supprimer mon compte!</button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
