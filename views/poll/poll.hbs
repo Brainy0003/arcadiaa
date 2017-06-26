@@ -1,21 +1,8 @@
 <!-- TITLE, COPY TO CLIPBOARD AND SHARE BUTTONS -->
-<p class="text-center">{{title}}</p>
+<h2 class="text-center">{{title}}</h2>
 <hr>
 
 <!-- POSSIBLE ERRORS -->
-{{#if hasMessages}}
-    <div class="alert alert-danger">
-        <!-- POLL -->
-        {{#each messages}}
-            <p class="poll-answer">
-                {{this}}
-            </p>
-        {{/each}}
-    </div>
-{{/if}}
-
-<!-- SUCCESS MESSAGES -->
-
 {{#if hasErrors}}
     <div class="alert alert-danger">
         <!-- POLL -->
@@ -30,14 +17,14 @@
 
 <!-- ANSWERS AND VOTE -->
 <div class="row">
-    <div class="col-md-5">
+    <div class="col-sm-4">
         <form action="/poll/vote/{{id}}" class="poll-list" method="post">
             <!-- We get the ID of the poll -->
             {{#each answers}}
-                <div class="poll">
+                <div class="poll-answer" style="margin-top: 20px">
                     <div class="input-group">
                         <span class="input-group-addon">
-                          <input type="radio" class="chooseAnswer" name="answer" value="{{this.pos}}">
+                          <input type="radio" name="answer" value="{{this.pos}}">
                         </span>
                         <p class="poll-answer form-control">
                             {{this.answer}}
@@ -45,28 +32,24 @@
                     </div>
                 </div>
             {{/each}}
-            <button type="submit" class="btn btn-success poll-vote" disabled>Vote!</button>
-            {{#if isAuthorOfPoll}}
-                <a href="/poll/modify/{{id}}" class="btn btn-warning pull-right poll-edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit this poll</a>
-            {{/if}}
+            <button type="submit" class="btn btn-success poll-vote" style="margin-top:15px">Voter</button>
         </form>
     </div>
-    <div class="col-md-7 chartContainer">
+    <div class="col-sm-8">
         {{#if noVotes}}
-            <h1 class="text-center">No vote yet</h1>
+            <h1 class="text-center">Toujours pas de votes!</h1>
         {{else}}
             <canvas id="myChart"></canvas>
-            <p class="text-center">Total votes : {{numberOfVotes}}</p>
+            <p class="text-center">Nombre total de votes : {{numberOfVotes}}</p>
         {{/if}}
     </div>
 </div>
 
 <!-- AUTHOR OF THE POLL -->
-<p class="text-center poll-propose">Proposed by {{ author }}</p>
+<p class="text-center">Proposé par {{ author }}</p>
 
 <input type="hidden" id="inputID" value= {{id}}>
-<input type="hidden" id="inputURL" value="{{fullUrl}}">
+
 <!-- SCRIPTS OF THE PAGE -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.5.13/clipboard.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script src="/javascripts/poll.js" charset="utf-8"></script>

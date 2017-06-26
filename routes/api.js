@@ -1,5 +1,6 @@
 var express = require('express');
 var Message = require('../models/message');
+var Poll = require('../models/poll');
 var router = express.Router();
 
 /*
@@ -38,6 +39,20 @@ router.get('/messages/:room', function(req, res, next) {
     }
     res.json(messages);
   });
+});
+
+router.get('/poll/:id', function(req, res, next) {
+    // We search the poll by id and we return the data of the poll in the JSON format
+    Poll.findById(req.params.id, function(err, result) {
+        if (err) throw err;
+        res.json({
+            answers: result.answers,
+            title: result.title,
+            author: result.author,
+            id: req.params.id,
+            colors: result.colors
+        });
+    });
 });
 
 module.exports = router;
