@@ -1,5 +1,3 @@
-"use strict";
-
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -10,6 +8,7 @@ var mongoose = require('mongoose');
 var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 var validator = require('express-validator');
 var helmet = require('helmet');
 var expressHbs = require('express-handlebars');
@@ -20,6 +19,7 @@ Require all routes
  */
 var index = require('./routes/index');
 var user = require('./routes/user');
+var poll = require('./routes/poll');
 var api = require('./routes/api');
 var chat = require('./routes/chat');
 var auth = require('./routes/auth');
@@ -86,7 +86,10 @@ app.use(session({
     secret: process.env.ARCADIAA_SECRET_SESSION_KEY,
     resave: false,
     saveUninitialized: false,
-    // cookie expires in 3 hour
+    store: new MongoStore({
+        mongooseConnection: mongoose.connection
+    }),
+    // cookie expires in 3 hours
     cookie: {
         maxAge: 180 * 60 * 1000
     }
@@ -115,6 +118,7 @@ app.use('/auth', auth);
 app.use('/user', user);
 app.use('/api', api);
 app.use('/chat', chat);
+app.use('/poll', poll);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

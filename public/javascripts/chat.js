@@ -1,36 +1,33 @@
-"use strict";
+/* Helpers functions */
+function addMessage(element, messageClass, author, content, date) {
+  moment.locale('fr');
+  date = moment(date).format('DD MMM HH:mm');
+  element.append(`<div class="${messageClass}"><div class="author">${author} <span class='pull-right'>${date}</span></div><div class="content">${content} </div></div>`);
+  scrollToBottom(element);
+}
+
+function scrollToBottom(element) {
+  // Scroll to bottom at each message
+  let height = element[0].scrollHeight;
+  element.scrollTop(height);
+}
+
+function addAllMessages(room, nbMessages) {
+  $.get(`/api/messages/${room}`, function(messages) {
+    $("#messages").empty();
+    let length = messages.length;
+    let numberOfMessagesToShow = length > nbMessages ? nbMessages : length;
+    for (let i = length - numberOfMessagesToShow; i < length; i++) {
+      addMessage($("#messages"), 'message', messages[i].author, messages[i].content, messages[i].date);
+    }
+  });
+}
+
+function switchRoom(room) {
+  chat.emit('switchRoom', room);
+}
 
 $(document).ready(function() {
-
-  /* Helpers functions */
-  function addMessage(element, messageClass, author, content, date) {
-    moment.locale('fr');
-    date = moment(date).format('DD MMM HH:mm');
-    element.append(`<div class="${messageClass}"><div class="author">${author} <span class='pull-right'>${date}</span></div><div class="content">${content} </div></div>`);
-    scrollToBottom(element);
-  }
-
-  function scrollToBottom(element) {
-    // Scroll to bottom at each message
-    let height = element[0].scrollHeight;
-    element.scrollTop(height);
-  }
-
-  function addAllMessages(room, nbMessages) {
-    $.get(`/api/messages/${room}`, function(messages) {
-      $("#messages").empty();
-      let length = messages.length;
-      let numberOfMessagesToShow = length > nbMessages ? nbMessages : length;
-      for (let i = length - numberOfMessagesToShow; i < length; i++) {
-        addMessage($("#messages"), 'message', messages[i].author, messages[i].content, messages[i].date);
-      }
-    });
-  }
-
-  function switchRoom(room) {
-    chat.emit('switchRoom', room);
-  }
-
   var chat = io();
   addAllMessages('general', 25);
 

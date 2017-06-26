@@ -12,8 +12,4 @@ router.get('/', function(req, res, next) {
   });
 });
 
-router.get('/polls', function(req, res, next) {
-  res.render('beta');
-});
-
 module.exports = router;

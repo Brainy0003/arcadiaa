@@ -17,7 +17,11 @@ module.exports = function(io) {
       io.emit('connectedUsers', users)
     });
     socket.on('disconnect', function() {
-      users.splice(users.indexOf(socket.username), 1);
+      for (var i = 0; i < users.length; i++) {
+        users = users.filter(function(username) {
+          return username !== socket.username
+        });
+      }
       io.emit('connectedUsers', users);
     });
     socket.on('switchRoom', function(newRoom) {

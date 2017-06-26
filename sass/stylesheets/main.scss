@@ -98,6 +98,13 @@ body {
     transform: scale(1);
   }
 }
+
+/* POLLS */
+
+.still-nothing {
+  color: gray,
+}
+
 /* SIGNIN AND SIGNUP */
 
 .or {
@@ -115,5 +122,16 @@ body {
   color: whitesmoke;
   &:hover {
     color: white;
+  }
+}
+
+
+/* FOOTER */
+
+.fa-github, .fa-twitter {
+  margin: 0px 5px;
+  transition: all 0.5s ease-in-out;
+  &:hover {
+  transform: scale(1.1);
   }
 }
