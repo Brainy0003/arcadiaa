@@ -27,9 +27,7 @@
                         <span class="input-group-addon">
                           <input type="radio" name="answer" value="{{this.pos}}">
                         </span>
-                        <p class="poll-answer form-control">
-                            {{this.answer}}
-                        </p>
+                        <p class="poll-answer form-control">{{this.answer}}</p>
                     </div>
                 </div>
             {{/each}}
@@ -41,7 +39,7 @@
         {{#if noVotes}}
             <h1 class="text-center">Toujours pas de votes!</h1>
         {{else}}
-        <div id="chartContainer" style="height: 500px"> 
+        <div id="chartContainer" style="height: 500px">
             <canvas id="myChart"></canvas>
           </div>
             <p class="text-center">Nombre total de votes : {{numberOfVotes}}</p>

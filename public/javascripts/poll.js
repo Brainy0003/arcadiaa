@@ -1,11 +1,9 @@
 $(document).ready(function() {
-  var poll = io('/poll');
 
   var id = document.getElementById("inputID").value;
   // Chart
 
   var ctx = document.getElementById("myChart");
-  var $chartContainer = $("#chartContainer");
   $.get("/api/poll/" + id, function(data) {
     // We get the data
     var answers = [];
