@@ -23,16 +23,12 @@ function addAllMessages(room, nbMessages) {
   });
 }
 
-function switchRoom(room) {
-  chat.emit('switchRoom', room);
-}
-
 $(document).ready(function() {
   var chat = io();
   addAllMessages('general', 25);
 
   $(".switch").on('click', function() {
-    switchRoom(this.id);
+    chat.emit('switchRoom', this.id);
   });
 
   $("#messageInput").on('keypress', function(e) {
