@@ -1,8 +1,11 @@
 $(document).ready(function() {
+  var poll = io('/poll');
+
   var id = document.getElementById("inputID").value;
   // Chart
 
   var ctx = document.getElementById("myChart");
+  var $chartContainer = $("#chartContainer");
   $.get("/api/poll/" + id, function(data) {
     // We get the data
     var answers = [];
@@ -29,10 +32,7 @@ $(document).ready(function() {
     var myDoughnutChart = new Chart(ctx, {
       type: 'doughnut',
       data: data,
-      options: {
-        responsive: true,
-        maintainAspectRatio: true
-      }
+      options: { responsive: true, maintainAspectRatio: false }
     });
   });
 });

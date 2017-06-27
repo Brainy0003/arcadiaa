@@ -13,7 +13,7 @@ router.get('/', isLoggedIn, function(req, res, next) {
     let hasPolls = polls.length > 0
     res.render('poll/list', {
       hasPolls: hasPolls,
-      polls: hasPolls ? polls : null,
+      polls: hasPolls ? polls.reverse() : null,
       isChief: req.user.isChief
     });
   });
@@ -47,20 +47,12 @@ router.post('/vote/:id', function(req, res, next) {
     if (err) throw err;
     // If the user currently logged has not voted for this poll yet
     var hasVoted = false;
-    if (res.locals.login) {
       if (poll.voters.indexOf(req.user.username) === -1) {
         poll.voters.push(req.user.username);
         hasVoted = true;
       }
-    }
-    // If no one has voted during the session
-    if (!req.session[id]) {
-      hasVoted = true;
-    }
     // We check if someone has voted
     if (hasVoted) {
-      req.session[id] = true;
-      // Increment the vote for a specific answer
       poll.answers[pos].vote += 1;
       // Tell mongoose answers has been modified
       poll.markModified('answers');
@@ -69,7 +61,7 @@ router.post('/vote/:id', function(req, res, next) {
         res.redirect('/poll/' + id);
       });
     } else {
-      req.flash('error', "Vous ne pouvez pas voter plus d'une fois");
+      req.flash('error', "Vous avez déjà voté");
       res.redirect('/poll/' + id);
     }
   });

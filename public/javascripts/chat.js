@@ -24,7 +24,7 @@ function addAllMessages(room, nbMessages) {
 }
 
 $(document).ready(function() {
-  var chat = io();
+  var chat = io('/chat');
   addAllMessages('general', 25);
 
   $(".switch").on('click', function() {

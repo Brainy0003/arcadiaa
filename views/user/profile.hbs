@@ -17,10 +17,22 @@
     <h4>Mais dès que cela sera possible, tu pourras voir tes stats ici!</h4>
   </div>
   <div class="col-sm-6">
-    <h2>Paramètres</h2>
-    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount">
-      Supprimer mon compte
-    </button>
+    <div class="row">
+      <div class="col-sm-12">
+        <h2>Mes sondages</h2>
+        <ul class="list-group">
+          {{#each polls}}
+            <a class="list-group-item" href="/poll/{{this.id}}">{{this.title}}</a>
+          {{/each}}
+        </ul>
+      </div>
+      <div class="col-sm-12">
+        <h2>Paramètres</h2>
+        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteAccount">
+          Supprimer mon compte
+        </button>
+      </div>
+    </div>
   </div>
 </div>
 

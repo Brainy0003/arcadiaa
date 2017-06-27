@@ -5,7 +5,10 @@ var Message = require('../models/message');
 
 module.exports = function(io) {
   var users = [];
-  io.on('connection', function(socket) {
+  var poll = io.of('/poll');
+  var chat = io.of('/chat');
+
+  chat.on('connection', function(socket) {
     socket.on('userConnecting', function(username) {
       /* User is initially in the general room */
       socket.room = 'general';
@@ -14,7 +17,7 @@ module.exports = function(io) {
       if (users.indexOf(username) === -1) {
         users.push(username);
       }
-      io.emit('connectedUsers', users)
+      chat.emit('connectedUsers', users)
     });
     socket.on('disconnect', function() {
       for (var i = 0; i < users.length; i++) {
@@ -22,7 +25,7 @@ module.exports = function(io) {
           return username !== socket.username
         });
       }
-      io.emit('connectedUsers', users);
+      chat.emit('connectedUsers', users);
     });
     socket.on('switchRoom', function(newRoom) {
       socket.leave(socket.room);
@@ -39,7 +42,7 @@ module.exports = function(io) {
         if (err) {
           return err;
         } else {
-          io.to(socket.room).emit('chatMessage', msg);
+          chat.to(socket.room).emit('chatMessage', msg);
           socket.broadcast.to(socket.room).emit('stoppedTyping');
         }
       });
