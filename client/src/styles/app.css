@@ -1,0 +1,142 @@
+/* general */
+
+body,
+html {
+    height: 100%;
+}
+
+* {
+    font-family: Roboto;
+}
+
+.title {
+    font-family: Roboto;
+    font-weight: 700;
+}
+
+.app-container {
+    height: 100%;
+    margin-bottom: -60px;
+}
+
+.app-container-row {
+    height: 90%;
+}
+
+
+/* header */
+
+.header-link-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.icon-description {
+    margin-left: 5px;
+}
+
+
+/* home */
+
+.home-container {
+    padding: 20px;
+}
+
+.home-title {
+    color: white;
+}
+
+.home-background {
+    background-color: #2e3035;
+}
+
+.home-image {
+    max-width: 200px;
+    max-height: 200px;
+    margin: 0 auto;
+}
+
+
+/* chat */
+
+.chat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.add-message-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 3px;
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    padding: 10px;
+}
+
+.add-message-input-container {
+    width: 95%;
+}
+
+.rooms-container {
+    float: right;
+}
+
+.messages-list {
+    height: 85%;
+    overflow: auto;
+}
+
+.message-author {
+    margin-left: 10px;
+    font-family: Roboto;
+    font-weight: 500;
+}
+
+
+/* auth */
+
+.or {
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+
+/* profile */
+
+.choose-avatar-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.choose-avatar-list {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+}
+
+
+/* footer */
+
+footer {
+    margin-top: 10px;
+    height: 90px;
+    background-color: #444;
+    border-top: 1px solid #e0e0e0;
+    color: #eee;
+    padding-top: 10px;
+}
+
+.footer-link {
+    margin: 0px 5px;
+    color: #eee;
+}
+
+.footer-link:focus,
+.footer-link:hover,
+.footer-link:active {
+    color: white;
+}
