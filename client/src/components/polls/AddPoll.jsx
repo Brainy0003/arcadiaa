@@ -36,9 +36,10 @@ class AddPoll extends Component {
 
     handleSubmitClick = () => {
         this.props.addPoll({
-            'title': this.state.title,
-            'answers': this.state.answers,
-            'author': this.props.user.username
+            title: this.state.title,
+            answers: this.state.answers,
+            author: this.props.user.username,
+            date: new Date()
         });
         this.handleClose();
     }

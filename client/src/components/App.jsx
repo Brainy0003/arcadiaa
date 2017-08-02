@@ -4,7 +4,7 @@ import Home from './Home';
 import { Header, Footer } from './layout';
 import { Signin, Signup } from './authentication';
 import Chat from './chat/Chat';
-import Polls from './polls/Polls';
+import PollsContainer from './polls/PollsContainer';
 import Profile from './profile/Profile';
 import PrivateRoute from './PrivateRoute';
 import store from '../configureStore';
@@ -20,7 +20,7 @@ const App = () => (
                     <Header />
                     <Route exact path="/" component={Home} />
                     <PrivateRoute path="/chat" component={Chat} />
-                    <PrivateRoute path="/polls" component={Polls} />
+                    <PrivateRoute path="/polls" component={PollsContainer} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <Route path="/signin" component={Signin} />
                     <Route path="/signup" component={Signup} />

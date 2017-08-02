@@ -10,6 +10,7 @@ const pollSchema = new Schema({
         type: Array,
         required: true
     },
+    date: Date,
     author: String,
     voters: Array
 });

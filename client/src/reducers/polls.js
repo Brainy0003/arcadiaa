@@ -1,10 +1,16 @@
 import {
-    ADD_POLL
+    ADD_POLL,
+    LOAD_POLLS
 } from '../actions/poll';
 
-const polls = (state = {}, action) => {
+const polls = (state = [], action) => {
     switch (action.type) {
-        default: return state;
+        case ADD_POLL:
+            return state.concat(action.poll);
+        case LOAD_POLLS:
+            return action.polls;
+        default:
+            return state;
     }
 }
 

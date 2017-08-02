@@ -29,11 +29,13 @@ router.post('/add', (req, res, next) => {
     const {
         author,
         title,
-        answers
+        answers,
+        date
     } = req.body;
     let poll = new Poll({
         author,
         title,
+        date,
         answers: buildAnswers(answers)
     });
     poll.save((err, poll) => {

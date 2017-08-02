@@ -1,6 +1,6 @@
 import ChooseAvatar from './ChooseAvatar';
 import Me from './Me';
-import Account from './Account'
+import Account from './Account';
 
 export {
     ChooseAvatar,
