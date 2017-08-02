@@ -137,9 +137,7 @@ class Home extends Component {
                 </h2>
               </div>
               <div>
-                <p>
-                  {contentToShow.description}
-                </p>
+                {contentToShow.description}
               </div>
               <BottomNavigation selectedIndex={this.state.selected}>
                 <BottomNavigationItem
