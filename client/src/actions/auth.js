@@ -27,66 +27,70 @@ if (token) {
 
 /* signup */
 
-const signupSuccess = (data) => {
-    localStorage.setItem('jwt', data.token);
-    axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
-    return {
-        type: SIGNUP_SUCCESS,
-        user: data.user
-    }
-}
-
-const signupFailure = (error, field) => ({
-    type: SIGNUP_FAILURE,
-    error,
-    field
-});
-
 export const signup = (username, password, passwordVerification) => {
-    return function (dispatch) {
-        return axios.post('/api/auth/signup', {
+    return async dispatch => {
+        const onSuccess = (data) => {
+            localStorage.setItem('jwt', data.token);
+            axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
+            return {
+                type: SIGNUP_SUCCESS,
+                user: data.user
+            };
+        }
+        const onFailure = (error, field) => ({
+            type: SIGNUP_FAILURE,
+            error,
+            field
+        });
+        try {
+            const response = await axios.post('/api/auth/signup', {
                 username,
                 password,
                 passwordVerification
-            })
-            .then(response => {
-                const data = response.data;
-                data.error ?
-                    dispatch(signupFailure(data.error, data.field)) :
-                    dispatch(signupSuccess(data));
-            }).catch(error => dispatch(signupFailure(error)));
+            });
+            const data = response.data;
+            if (data.error) {
+                dispatch(onFailure(data.error, data.field))
+            } else {
+                dispatch(onSuccess(data))
+            }
+        } catch (error) {
+            return error;
+        }
     }
 }
 
 /* signin */
 
-const signinSuccess = (data) => {
-    localStorage.setItem('jwt', data.token);
-    axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
-    return {
-        type: SIGNIN_SUCCESS,
-        user: data.user
-    }
-}
-
-const signinFailure = (error, field) => ({
-    type: SIGNIN_FAILURE,
-    error,
-    field
-});
-
 export const signin = (username, password) => {
-    return function (dispatch) {
-        return axios.post('/api/auth/signin', {
+    return async dispatch => {
+        const onSuccess = (data) => {
+            localStorage.setItem('jwt', data.token);
+            axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
+            return {
+                type: SIGNIN_SUCCESS,
+                user: data.user
+            }
+        }
+        const onFailure = (error, field) => ({
+            type: SIGNIN_FAILURE,
+            error,
+            field
+        })
+        try {
+            const response = await axios.post('/api/auth/signin', {
                 username,
                 password
-            })
-            .then(response => {
-                const data = response.data;
-                data.error ?
-                    dispatch(signinFailure(data.error, data.field)) :
-                    dispatch(signinSuccess(data));
-            }).catch(error => dispatch(signinFailure(error)));
+            });
+            const data = response.data;
+            if (data.error) {
+                dispatch(onFailure(data.error, data.field))
+            } else {
+                dispatch(onSuccess(data))
+            }
+        } catch (error) {
+            return error;
+        }
     }
 }
 

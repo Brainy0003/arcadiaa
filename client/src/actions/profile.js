@@ -5,24 +5,21 @@ import {
 
 export const CHANGE_AVATAR = 'CHANGE_AVATAR';
 
-export const changeAvatar = (avatar, id) => (dispatch) => {
-    return axios.post('/api/profile/avatar', {
+export const changeAvatar = (avatar, id) => async dispatch => {
+    const user = await axios.post('/api/profile/avatar', {
         avatar,
         id
-    }).then(response => {
-        const user = response.data;
-        dispatch({
-            type: CHANGE_AVATAR,
-            user
-        });
+    });
+    dispatch({
+        type: CHANGE_AVATAR,
+        user: user.data
     });
 }
 
-export const deleteAccount = (id) => (dispatch) => {
-    return axios.delete(`/api/profile/delete/${id}`).then(response => {
-        localStorage.removeItem('jwt');
-        dispatch({
-            type: SIGNOUT
-        });
+export const deleteAccount = (id) => async dispatch => {
+    await axios.delete(`/api/profile/delete/${id}`)
+    localStorage.removeItem('jwt');
+    dispatch({
+        type: SIGNOUT
     });
 }

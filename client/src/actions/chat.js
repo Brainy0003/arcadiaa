@@ -2,8 +2,7 @@ import axios from 'axios';
 import io from 'socket.io-client';
 import store from '../configureStore';
 
-export const LOAD_MESSAGES = 'LOAD_MESSAGES';
-export const LOAD_USERS = 'LOAD_USERS';
+export const LOAD_CHAT_DATA = 'LOAD_CHAT_DATA';
 export const ADD_MESSAGE = 'ADD_MESSAGE';
 export const SWITCH_ROOM = 'SWITCH_ROOM';
 
@@ -23,25 +22,19 @@ socket.on('switch room', (room) => {
     });
 });
 
-const loadMessagesSuccess = (messages) => ({
-    type: LOAD_MESSAGES,
-    messages
-});
+export const loadChatData = () => async dispatch => {
+    const messages = await axios.get('/api/chat/messages');
+    const users = await axios.get('/api/user/all');
+    return dispatch({
+        type: LOAD_CHAT_DATA,
+        messages: messages.data,
+        users: users.data
+    });
+};
 
-export const loadMessages = () => (dispatch) => {
-    return axios.get('/api/chat/messages')
-        .then(response => {
-            const messages = response.data;
-            dispatch(loadMessagesSuccess(messages))
-        })
-}
-
-export const addMessage = (message) => (dispatch) => {
-    return axios.post('/api/chat/addMessage', message)
-        .then(response => {
-            const messageReceived = response.data;
-            socket.emit('add message', messageReceived);
-        });
+export const addMessage = (message) => async dispatch => {
+    const messageReceived = await axios.post('/api/chat/addMessage', message);
+    return socket.emit('add message', messageReceived.data);
 }
 
 export const switchRoom = (room) => (dispatch) => {
