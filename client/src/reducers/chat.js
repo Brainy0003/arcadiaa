@@ -1,6 +1,5 @@
 import {
-    LOAD_MESSAGES,
-    LOAD_USERS,
+    LOAD_CHAT_DATA,
     ADD_MESSAGE,
     SWITCH_ROOM
 } from '../actions/chat';
@@ -11,16 +10,12 @@ import {
 
 const chat = (state = {}, action) => {
     switch (action.type) {
-        case LOAD_MESSAGES:
+        case LOAD_CHAT_DATA:
             return {
                 ...state,
                 'messages': action.messages,
+                'users': action.users,
                 'currentRoom': 'general'
-            };
-        case LOAD_USERS:
-            return {
-                ...state,
-                'users': action.users
             };
         case ADD_MESSAGE:
             return {

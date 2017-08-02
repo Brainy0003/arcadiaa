@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import { Message, AddMessage } from './';
-import { loadMessages } from '../../actions/chat';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import List from 'material-ui/List';
 
@@ -15,9 +12,7 @@ const roomDescription = {
 
 class MessagesList extends Component {
     componentDidMount() {
-        if (!this.props.currentRoom) {
-            this.props.loadMessages();
-        }
+        this.scrollToBottom();
     }
 
     componentDidUpdate() {
@@ -25,46 +20,31 @@ class MessagesList extends Component {
     }
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView(false);
+        this.messagesEnd.scrollIntoView(false)
     }
 
     render() {
-        if (!this.props.messages) {
-            return (
-                <div>
-                    <h5 className="title text-center">Chargement...</h5>
-                </div>
-            );
-        } else {
-            let messages = this.props.messages.filter(message => message.room === this.props.currentRoom);
-            return (
-                <div className="app-container-row">
-                    <em>{roomDescription[this.props.currentRoom]}</em>
-                    <div className="messages-list">
-                        <List>
-                            {messages.map(message => <Message key={message._id} author={message.author} content={message.content} date={message.date} />)}
-                        </List>
-                        <div style={{ float: "left", clear: "both" }}
-                            ref={(el) => { this.messagesEnd = el; }}>
-                        </div>
+        let messages = this.props.messages.filter(message => message.room === this.props.currentRoom);
+        return (
+            <div className="app-container-row">
+                <em>{roomDescription[this.props.currentRoom]}</em>
+                <div className="messages-list">
+                    <List>
+                        {messages.map(message => {
+                            const hasUser = this.props.users[message.author] !== undefined;
+                            const author = hasUser ? message.author : 'Utilisateur supprimé';
+                            const avatar = hasUser ? `http://www.clashapi.xyz/images/cards/${this.props.users[author].avatar}.png` : 'http://clashroyalearena.com/wp-content/uploads/2016/11/sad-face-clash-royale.png';
+                            return <Message key={message._id} author={author} content={message.content} date={message.date} avatar={avatar} />
+                        })}
+                    </List>
+                    <div style={{ float: "left", clear: "both" }}
+                        ref={(el) => { this.messagesEnd = el; }}>
                     </div>
-                    <AddMessage />
                 </div>
-            )
-        }
+                <AddMessage />
+            </div>
+        )
     }
 }
-
-const mapStateToProps = (state) => ({
-    messages: state.chat.messages,
-    users: state.chat.users,
-    currentRoom: state.chat.currentRoom
-});
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    loadMessages,
-}, dispatch);
-
-MessagesList = connect(mapStateToProps, mapDispatchToProps)(MessagesList);
 
 export default MessagesList;
