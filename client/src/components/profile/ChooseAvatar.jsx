@@ -1,11 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import { changeAvatar } from '../../actions/profile';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import { GridList, GridTile } from 'material-ui/GridList';
-
 
 const styles = {
     root: {
@@ -28,11 +24,9 @@ class ChooseAvatar extends Component {
         }
     }
 
-    componentDidMount() {
-        axios.get('/api/clashroyale/cards').then(response => {
-            const cards = response.data;
-            this.setState({ cards: cards })
-        });
+    async componentDidMount() {
+        const cards = await axios.get('/api/clashroyale/cards');
+        this.setState({ cards: cards.data });
     }
 
     render() {
@@ -43,8 +37,8 @@ class ChooseAvatar extends Component {
                         {this.state.cards.map(card => (
                             <GridTile
                                 key={card}
-                                onClick={() => this.props.changeAvatar(card, this.props.user.id)}
-                                title={this.props.user.avatar === card && 'Votre avatar'}
+                                onClick={() => this.props.changeAvatar(card, this.props.id)}
+                                title={this.props.avatar === card && 'Votre avatar'}
                             >
                                 <img src={`http://www.clashapi.xyz/images/cards/${card}.png`} alt={card} />
                             </GridTile>
@@ -54,18 +48,10 @@ class ChooseAvatar extends Component {
             )
         } else {
             return (
-                <p>Chargement...</p>
+                <h5 className="title">Chargement...</h5>
             )
         }
     }
 }
-
-const mapStateToProps = (state) => ({ user: state.auth.user });
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    changeAvatar
-}, dispatch);
-
-ChooseAvatar = connect(mapStateToProps, mapDispatchToProps)(ChooseAvatar);
 
 export default ChooseAvatar;

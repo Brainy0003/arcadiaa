@@ -1,7 +1,4 @@
 import React, { Component } from 'react';
-import { deleteAccount } from '../../actions/profile';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
 
 import { red500 } from 'material-ui/styles/colors';
 import FlatButton from 'material-ui/FlatButton';
@@ -59,13 +56,5 @@ class Account extends Component {
         );
     }
 }
-
-const mapStateToProps = (state) => ({ id: state.auth.user.id });
-
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-    deleteAccount
-}, dispatch);
-
-Account = connect(mapStateToProps, mapDispatchToProps)(Account);
 
 export default Account;
