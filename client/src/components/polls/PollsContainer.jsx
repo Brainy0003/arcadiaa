@@ -1,16 +1,18 @@
 import React from 'react';
-import { AddPoll, PollsList } from './';
+import { Route } from 'react-router-dom';
+import { AddPoll, PollsList, Poll } from './';
 import { Grid, Row, Col } from 'react-bootstrap';
 
-const Polls = () => (
+const Polls = ({ match }) => (
     <Grid className="app-container" fluid>
         <h1 className="title">Sondages</h1>
         <Row>
-            <Col sm={12}>
+            <Col sm={6}>
                 <PollsList />
-            </Col>
-            <Col sm={12}>
                 <AddPoll />
+            </Col>
+            <Col sm={6}>
+                <Route path={`${match.url}/:pollId`} component={Poll} />
             </Col>
         </Row>
     </Grid>

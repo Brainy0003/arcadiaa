@@ -6,7 +6,7 @@ import {
 const polls = (state = [], action) => {
     switch (action.type) {
         case ADD_POLL:
-            return state.concat(action.poll);
+            return [action.poll].concat(state);
         case LOAD_POLLS:
             return action.polls;
         default:

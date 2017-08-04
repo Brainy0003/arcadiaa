@@ -10,7 +10,7 @@ import Subheader from 'material-ui/Subheader';
 class Profile extends Component {
     render() {
         return (
-            <Grid className="app-container" fluid>
+            <Grid fluid>
                 <h1 className="title">Profil</h1>
                 <Row>
                     <Col sm={12}>

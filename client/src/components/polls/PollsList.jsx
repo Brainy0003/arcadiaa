@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Poll } from './';
 import { loadPolls } from '../../actions/poll';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import List from 'material-ui/List';
+import { List, ListItem } from 'material-ui/List';
 
 class PollsList extends Component {
     componentDidMount() {
@@ -21,7 +22,15 @@ class PollsList extends Component {
         } else {
             return (
                 <List>
-                    {this.props.polls.map(poll => <Poll key={poll._id} title={poll.title} />)}
+                    {this.props.polls.map(poll => {
+                        return (
+                            <Link key={poll._id} to={`/polls/${poll._id}`}>
+                                <ListItem>
+                                    {poll.title}
+                                </ListItem>
+                            </Link>
+                        );
+                    })}
                 </List>
             );
         }

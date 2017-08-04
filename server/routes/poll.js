@@ -5,10 +5,10 @@ import randomColor from 'randomcolor';
 const router = express.Router();
 
 router.get('/all', (req, res, next) => {
-    Poll.find({}, (err, polls) => {
+    Poll.find({}).sort('-date').exec((err, polls) => {
         if (err) return next(err);
         res.json(polls);
-    })
+    });
 });
 
 router.get('/:id', (req, res, next) => {

@@ -1,14 +1,13 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-import Avatar from 'material-ui/Avatar';
-import { ListItem } from 'material-ui/List';
-
-const Poll = (props) => (
-    <div>
-        <ListItem>
-            <p>{props.title}</p>
-        </ListItem>
-    </div>
-);
+class Poll extends Component {
+    render() {
+        return (
+            <div>
+                {this.props.match.params.pollId}
+            </div>
+        );
+    }
+}
 
 export default Poll;
