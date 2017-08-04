@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { MessagesList, Rooms } from './';
+import { MessagesList, Rooms, AddMessage } from './';
 import { loadChatData } from '../../actions/chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -19,15 +19,15 @@ class Chat extends Component {
             );
         } else {
             return (
-                <Grid fluid className="app-container">
+                <Grid fluid className="app-container-chat">
                     <Row>
                         <Col sm={12} className="chat-header">
                             <h1 className="title pull-left">Chat</h1>
                             <Rooms className="pull-right" />
                         </Col>
                     </Row>
-                    <Row className="app-container-row">
-                        <Col sm={12} className="app-container">
+                    <Row className="app-container-chat">
+                        <Col sm={12} className="app-container-chat">
                             <MessagesList
                                 messages={this.props.messages}
                                 currentRoom={this.props.currentRoom}
