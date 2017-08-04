@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
-import { FieldGroup } from './';
 import { Link, Redirect } from 'react-router-dom';
-import { Form, Button, Alert, Row, Col, Grid } from 'react-bootstrap';
-import { signup } from '../../actions/auth';
+import { Form, Row, Col, Grid } from 'react-bootstrap';
+import { signup, clearErrors } from '../../actions/auth';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+
+import Paper from 'material-ui/Paper';
+import TextField from 'material-ui/TextField';
+import RaisedButton from 'material-ui/RaisedButton';
 
 class Signup extends Component {
   constructor(props) {
@@ -18,6 +21,10 @@ class Signup extends Component {
     this.handleUsernameChange = this.handleUsernameChange.bind(this);
     this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handlePasswordVerificationChange = this.handlePasswordVerificationChange.bind(this);
+  }
+
+  componentWillUnmount() {
+    this.props.clearErrors();
   }
 
   handlePasswordChange(e) {
@@ -46,25 +53,42 @@ class Signup extends Component {
       <Grid className="app-container" fluid>
         <Row>
           <Col sm={6} smOffset={3}>
-            <Form>
-              <h2>Rejoignez nous !</h2>
-              {this.props.auth.hasErrors &&
-                <Alert bsStyle="danger">
-                  <h4>Oops... Une erreur est survenue <i className="fa fa-frown-o"></i></h4>
-                  <p>{this.props.auth.error}</p>
-                </Alert>
-              }
-              <FieldGroup id="username" label="Pseudo" type="text" help="De préférence, votre pseudo Clash Royale" name="username" onChange={this.handleUsernameChange} />
-              <FieldGroup id="password" label="Mot de passe" type="password" help="Choisissez un mot de passe sécurisé" name="password" onChange={this.handlePasswordChange} />
-              <FieldGroup id="password-verification" label="Confirmez votre mot de passe" help="Vos mots de passe doivent être identiques" type="password" name="passwordVerification" onChange={this.handlePasswordVerificationChange} />
-              <Button bsStyle="primary" bsSize="large" block onClick={this.handleSubmitClick}>Inscription</Button>
-              <div>
-                <hr />
-                <p className="text-center">
-                  <Link to="/signin">Vous avez déjà un compte?</Link>
-                </p>
-              </div>
-            </Form>
+            <Paper zDepth={2} style={{ padding: '15px' }}>
+              <Form>
+                <h2>Rejoignez-nous!</h2>
+                <TextField
+                  hintText="Utilisez de préférence votre pseudo Clash Royale"
+                  floatingLabelText="Pseudo"
+                  fullWidth
+                  type="text"
+                  errorText={this.props.auth.field === 'username' ? this.props.auth.error : ''}
+                  onChange={this.handleUsernameChange}
+                /><br />
+                <TextField
+                  hintText="Utilisez un mot de passe sécurisé"
+                  floatingLabelText="Mot de passe"
+                  fullWidth
+                  type="password"
+                  errorText={this.props.auth.field === 'password' ? this.props.auth.error : ''}
+                  onChange={this.handlePasswordChange}
+                /><br />
+                <TextField
+                  hintText="Vos mots de passe doivent être identiques"
+                  floatingLabelText="Vérification mot de passe"
+                  fullWidth
+                  type="password"
+                  errorText={this.props.auth.field === 'passwordVerification' ? this.props.auth.error : ''}
+                  onChange={this.handlePasswordVerificationChange}
+                /><br />
+                <RaisedButton label="Inscription" primary={true} fullWidth onClick={this.handleSubmitClick} />
+                <div>
+                  <hr />
+                  <p className="text-center">
+                    <Link to="/signin">Vous avez déjà un compte?</Link>
+                  </p>
+                </div>
+              </Form>
+            </Paper>
           </Col>
         </Row>
       </Grid>
@@ -75,7 +99,8 @@ class Signup extends Component {
 const mapStateToProps = state => ({ auth: state.auth });
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  signup
+  signup,
+  clearErrors
 }, dispatch);
 
 Signup = connect(mapStateToProps, mapDispatchToProps)(Signup);

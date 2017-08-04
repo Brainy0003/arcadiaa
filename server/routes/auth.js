@@ -32,7 +32,7 @@ router.post('/signin', (req, res, next) => {
   const password = req.body.password.trim();
   if (!username) {
     return res.json({
-      error: `Il manque des informations`,
+      error: `Ce champ n'est pas rempli`,
       field: 'username'
     });
   }
@@ -72,14 +72,28 @@ router.post('/signup', function (req, res, next) {
   const username = req.body.username.trim();
   const password = req.body.password.trim();
   const passwordVerification = req.body.passwordVerification.trim();
-  if (!username || !password || !passwordVerification) {
+  if (!username) {
     return res.json({
-      error: `Il manque des informations`
+      error: `Ce champ n'est pas rempli`,
+      field: 'username'
+    });
+  }
+  if (!password) {
+    return res.json({
+      error: `Ce champ n'est pas rempli`,
+      field: 'password'
+    });
+  }
+  if (!passwordVerification) {
+    return res.json({
+      error: `Ce champ n'est pas rempli`,
+      field: 'passwordVerification'
     });
   }
   if (password !== passwordVerification) {
     return res.json({
-      error: 'Les mots de passe sont différents'
+      error: 'Les mots de passe sont différents',
+      field: 'passwordVerification'
     });
   }
   User.findOne({
@@ -90,7 +104,8 @@ router.post('/signup', function (req, res, next) {
     }
     if (existingUser) {
       return res.json({
-        error: `Ce nom d'utilisateur est déjà utilisé`
+        error: `Ce nom d'utilisateur est déjà utilisé`,
+        field: 'username'
       });
     }
     let user = new User({
