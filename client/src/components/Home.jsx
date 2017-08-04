@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Footer } from './layout';
 import { Grid, Col, Row } from 'react-bootstrap';
 
 import Paper from 'material-ui/Paper';
@@ -68,10 +69,7 @@ const content = [
             Un joker se gagne par tranche de 20 couronnes à partir de 25 couronnes.
           </ListItem>
           <ListItem>
-            Limite de gain de 5 jokers par coffre (105 couronnes et +).
-          </ListItem>
-          <ListItem>
-            10 jokers maximum ! Impossible d'en stocker plus.
+            Limite de gain de 5 jokers par coffre (105 couronnes et +) et 10 jokers maximum ! Impossible d'en stocker plus.
           </ListItem>
           <ListItem>
             Vous êtes exclu si vous n'avez plus de joker.
@@ -96,10 +94,7 @@ const content = [
         <h4 className="title">Aînés</h4>
         <List>
           <ListItem>
-            Le grade d'Ainé est obtenu avec le premier joker.
-          </ListItem>
-          <ListItem>
-            Vous le conservez tant que vous avez au moins un joker.
+            Le grade d'Ainé est obtenu avec le premier joker et est conservé tant que vous avez au moins un joker.
           </ListItem>
         </List>
       </Col>
@@ -124,37 +119,40 @@ class Home extends Component {
   render() {
     const contentToShow = content[this.state.selected];
     return (
-      <Grid fluid>
-        <Row>
-          <Col sm={10} smOffset={1}>
-            <Paper className="home-container" zDepth={2}>
-              <h1 className="title">ArcadiaA</h1>
-              <Divider />
-              <div>
-                <h2 className="title">
-                  {contentToShow.avatar}
-                  <span style={{ marginLeft: "5px" }}>{contentToShow.title}</span>
-                </h2>
-              </div>
-              <div>
-                {contentToShow.description}
-              </div>
-              <BottomNavigation selectedIndex={this.state.selected}>
-                <BottomNavigationItem
-                  label="Bienvenue"
-                  icon={<FontIcon className="material-icons">home</FontIcon>}
-                  onTouchTap={() => this.select(0)}
-                />
-                <BottomNavigationItem
-                  label="Les règles"
-                  icon={<FontIcon className="material-icons">announcement</FontIcon>}
-                  onTouchTap={() => this.select(1)}
-                />
-              </BottomNavigation>
-            </Paper>
-          </Col>
-        </Row >
-      </Grid>
+      <div>
+        <Grid fluid>
+          <Row>
+            <Col sm={10} smOffset={1}>
+              <Paper className="home-container" zDepth={2}>
+                <h1 className="title">ArcadiaA</h1>
+                <Divider />
+                <div>
+                  <h2 className="title">
+                    {contentToShow.avatar}
+                    <span style={{ marginLeft: "5px" }}>{contentToShow.title}</span>
+                  </h2>
+                </div>
+                <div>
+                  {contentToShow.description}
+                </div>
+                <BottomNavigation selectedIndex={this.state.selected}>
+                  <BottomNavigationItem
+                    label="Bienvenue"
+                    icon={<FontIcon className="material-icons">home</FontIcon>}
+                    onTouchTap={() => this.select(0)}
+                  />
+                  <BottomNavigationItem
+                    label="Les règles"
+                    icon={<FontIcon className="material-icons">announcement</FontIcon>}
+                    onTouchTap={() => this.select(1)}
+                  />
+                </BottomNavigation>
+              </Paper>
+            </Col>
+          </Row >
+        </Grid>
+        <Footer />
+      </div>
     );
   }
 }

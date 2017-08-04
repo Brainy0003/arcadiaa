@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Home from './Home';
-import { Header, Footer } from './layout';
+import { Header } from './layout';
 import { Signin, Signup } from './authentication';
 import Chat from './chat/Chat';
 import PollsContainer from './polls/PollsContainer';
@@ -24,7 +24,6 @@ const App = () => (
                     <PrivateRoute path="/profile" component={Profile} />
                     <Route path="/signin" component={Signin} />
                     <Route path="/signup" component={Signup} />
-                    <Footer />
                 </div>
             </Router>
         </MuiThemeProvider>
