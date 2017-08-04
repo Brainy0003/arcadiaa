@@ -7,15 +7,15 @@ import { ListItem } from 'material-ui/List';
 
 moment.locale('fr');
 
-const Message = (props) => (
+const Message = ({ author, date, avatar, content }) => (
     <div>
         <ListItem>
             <div>
-                <Avatar src={props.avatar} />
-                <span className="message-author">{props.author}</span>
-                <span className="small pull-right">{moment(props.date).fromNow()}</span>
+                <Avatar src={avatar} />
+                <span className="message-author">{author}</span>
+                <span className="small pull-right">{moment(date).fromNow()}</span>
             </div>
-            <p className="message-content">{props.content}</p>
+            <p className="message-content">{content}</p>
         </ListItem>
     </div>
 )

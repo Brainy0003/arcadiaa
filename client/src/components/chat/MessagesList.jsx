@@ -20,13 +20,13 @@ class MessagesList extends Component {
     }
 
     scrollToBottom = () => {
-        this.messagesEnd.scrollIntoView(false)
+        this.messagesEnd.scrollIntoView('smooth')
     }
 
     render() {
         let messages = this.props.messages.filter(message => message.room === this.props.currentRoom);
         return (
-            <div className="app-container-row">
+            <div className="app-container">
                 <em>{roomDescription[this.props.currentRoom]}</em>
                 <div className="messages-list">
                     <List>
