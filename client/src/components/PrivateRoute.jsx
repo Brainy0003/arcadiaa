@@ -12,7 +12,7 @@ class PrivateRoute extends React.Component {
                 ) : (
                         <Redirect to={{
                             pathname: '/signin',
-                            state: { from: props.location, message: 'Vous devez vous connecter pour accéder à cette page !' }
+                            state: { from: props.location, message: 'Accès refusé : vous devez vous connecter pour accéder à cette page !' }
                         }} />
                     )
             )} />

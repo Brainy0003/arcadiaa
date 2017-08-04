@@ -46,14 +46,13 @@ class Signin extends Component {
         }
         return (
             <Grid className="app-container" fluid>
-                {message && <p className="text-center">{message}</p>}
+                {message && <h4 className="text-center auth-message">{message}</h4>}
                 <Row>
                     <Col sm={6} smOffset={3}>
                         <Paper zDepth={2} style={{ padding: '15px' }}>
                             <Form>
                                 <h2>Re-bonjour!</h2>
                                 <TextField
-                                    hintText="Utilisez de préférence votre pseudo Clash Royale"
                                     floatingLabelText="Pseudo"
                                     fullWidth
                                     type="text"
@@ -61,7 +60,6 @@ class Signin extends Component {
                                     onChange={this.handleUsernameChange}
                                 /><br />
                                 <TextField
-                                    hintText="Utilisez un mot de passe sécurisé"
                                     floatingLabelText="Mot de passe"
                                     fullWidth
                                     type="password"
