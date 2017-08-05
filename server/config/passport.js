@@ -1,7 +1,10 @@
 import passport from 'passport';
 import User from '../models/user';
 import config from './';
-import { Strategy as JwtStrategy, ExtractJwt } from 'passport-jwt';
+import {
+  Strategy as JwtStrategy,
+  ExtractJwt
+} from 'passport-jwt';
 
 const jwtOptions = {
   jwtFromRequest: ExtractJwt.fromAuthHeader(),
