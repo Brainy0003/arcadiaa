@@ -12,21 +12,27 @@ class AddMessage extends Component {
         this.state = {
             message: ''
         };
-        this.handleSubmitClick = this.handleSubmitClick.bind(this);
-        this.handleMessageChange = this.handleMessageChange.bind(this);
     }
 
-    handleMessageChange(e) {
+    handleMessageChange = (e) => {
         this.setState({ message: e.target.value })
     }
 
-    handleSubmitClick() {
+    handleKeyPress = (e) => {
+        const key = e.nativeEvent.keyCode;
+        if (key === 13) {
+            this.handleSubmitClick();
+        }
+    }
+
+    handleSubmitClick = () => {
         let message = this.state.message.trim();
+        const room = this.props.currentRoom ? this.props.currentRoom : 'general';
         if (message.length !== 0 && message.length < 500) {
             this.props.addMessage({
                 content: message,
                 author: this.props.user.username,
-                room: this.props.currentRoom,
+                room,
                 date: Date.now()
             });
             this.setState({ message: '' });
@@ -39,10 +45,10 @@ class AddMessage extends Component {
                 <div className="add-message-input-container">
                     <TextField
                         hintText="Tapez votre message ici"
-                        multiLine
                         fullWidth
                         value={this.state.message}
                         onChange={this.handleMessageChange}
+                        onKeyPress={this.handleKeyPress}
                     />
                 </div>
                 <div className="add-message-button-container" >

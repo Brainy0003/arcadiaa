@@ -3,14 +3,6 @@ import { Message, AddMessage } from './';
 
 import List from 'material-ui/List';
 
-const roomDescription = {
-    'general': 'Général désigne aussi salle bordélique car ici on parle de tout.',
-    'deck': 'Parlez stratégie. Quel deck utilisez-vous ?',
-    'chief': 'Ici, ça ne rigole pas. Nous devons prendre des décisions importantes pour la pérennité de notre clan.',
-    'bug': 'Vous avez trouvé un bug (que ce soit orthographe, problème d\'affichage, etc). Signalez le ici !',
-    'feature': 'Faites part de vos idées de génie ici pour améliorer cette application!'
-};
-
 class MessagesList extends Component {
     componentDidMount() {
         this.scrollToBottom();
@@ -25,10 +17,10 @@ class MessagesList extends Component {
     }
 
     render() {
-        let messages = this.props.messages.filter(message => message.room === this.props.currentRoom);
+        const room = this.props.currentRoom ? this.props.currentRoom : 'general';
+        let messages = this.props.messages.filter(message => message.room === room);
         return (
             <div className="app-container">
-                <em>{roomDescription[this.props.currentRoom]}</em>
                 <div className="messages-list">
                     <List>
                         {messages.map(message => {

@@ -14,8 +14,7 @@ const chat = (state = {}, action) => {
             return {
                 ...state,
                 'messages': action.messages,
-                'users': action.users,
-                'currentRoom': 'general'
+                'users': action.users
             };
         case ADD_MESSAGE:
             return {

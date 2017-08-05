@@ -56,6 +56,10 @@ html {
 /* chat */
 
 .chat-header {
+    border-bottom: 2.5px solid grey;
+}
+
+.chat-header-primary {
     display: flex;
     justify-content: space-between;
     align-items: center;
