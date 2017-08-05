@@ -26,10 +26,10 @@ const content = [
         <h4 className="title">Présentation du site</h4>
         <List>
           <ListItem>
-            Vous pouvez consultez les règles du clan en cliquant sur <em>Les règles</em> ci-dessous
+            Vous pouvez consultez les règles du clan en cliquant sur <em>Les règles</em> ci-dessous.
           </ListItem>
           <ListItem>
-            Vous pouvez chatter avec les autres membres du site en cliquant sur <em>Chat</em> ci-dessus
+            Vous pouvez chatter avec les autres membres du site en cliquant sur <em>Chat</em> ci-dessus.
           </ListItem>
           <ListItem>
             <p>Vous pouvez participer à des sondages en cliquant sur <em>Sondages</em> ci-dessus.</p>
