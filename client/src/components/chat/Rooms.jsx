@@ -52,6 +52,11 @@ class Rooms extends Component {
                         onTouchTap={() => this.handleTouchRoom('bug')}>
                         Bugs
                     </MenuItem>
+                    <MenuItem
+                        leftIcon={<i className="material-icons">lightbulb_outline</i>}
+                        onTouchTap={() => this.handleTouchRoom('feature')}>
+                        Idées
+                    </MenuItem>
                     {this.props.isChief && <MenuItem
                         leftIcon={<i className="material-icons">people_outline</i>}
                         onTouchTap={() => this.handleTouchRoom('chief')}>

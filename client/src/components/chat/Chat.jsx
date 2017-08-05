@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Row, Col } from 'react-bootstrap';
-import { MessagesList, Rooms, AddMessage } from './';
+import { MessagesList, Rooms } from './';
 import { loadChatData } from '../../actions/chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
