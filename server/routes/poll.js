@@ -1,6 +1,5 @@
 import express from 'express';
 import Poll from '../models/poll';
-import randomColor from 'randomcolor';
 
 const router = express.Router();
 
@@ -18,12 +17,35 @@ router.get('/:id', (req, res, next) => {
     });
 });
 
-const buildAnswers = (answers) => answers.split(',').map((answer, i) => ({
-    'answer': answer.trim(),
-    'vote': 0,
-    'pos': i,
-    'color': randomColor()
-}));
+const cleanArray = (arr) => {
+    let object = {};
+    let cleanArray = [];
+    let length = arr.length;
+    for (let i = 0; i < length; i++) {
+        let answer = arr[i].trim();
+        answer = answer.charAt(0).toUpperCase() + answer.slice(1);
+        if (answer !== '') {
+            object[answer] = -1;
+        }
+    }
+    for (let j in object) {
+        cleanArray.push(j);
+    }
+    return cleanArray;
+}
+
+const buildAnswers = (answers) => {
+    const answersArray = answers.split(',');
+    console.log(answersArray)
+    const cleanAnswersArray = cleanArray(answersArray);
+    console.log(cleanAnswersArray);
+    let answersBuilt = cleanAnswersArray.map((answer, i) => ({
+        'answer': answer.trim(),
+        'vote': 0,
+        'pos': i
+    }));
+    return answersBuilt;
+}
 
 router.post('/add', (req, res, next) => {
     const {
