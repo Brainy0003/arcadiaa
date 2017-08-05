@@ -11,11 +11,9 @@ const polls = (state = [], action) => {
         case LOAD_POLLS:
             return action.polls;
         case VOTE_POLL:
-            let poll;
             let index;
             for (let i = 0; i < state.length; i++) {
                 if (state[i]._id === action.poll._id) {
-                    poll = state[i];
                     index = i;
                 }
             }
