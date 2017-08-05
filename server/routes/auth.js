@@ -28,7 +28,7 @@ router.post('/decodeToken', (req, res, next) => {
 });
 
 router.post('/signin', (req, res, next) => {
-  const username = req.body.username.trim();
+  const username = req.body.username.trim().toLowerCase();
   const password = req.body.password.trim();
   if (!username) {
     return res.json({
@@ -69,7 +69,7 @@ router.post('/signin', (req, res, next) => {
 });
 
 router.post('/signup', function (req, res, next) {
-  const username = req.body.username.trim();
+  const username = req.body.username.trim().toLowerCase();
   const password = req.body.password.trim();
   const passwordVerification = req.body.passwordVerification.trim();
   if (!username) {
