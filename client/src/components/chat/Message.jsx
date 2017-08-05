@@ -16,7 +16,7 @@ const Message = ({ author, date, avatar, content }) => (
                 <span className="message-author">{author}</span>
                 <span className="small pull-right">{moment(date).fromNow()}</span>
             </div>
-            <Emojify>
+            <Emojify style={{ marginTop: "5px" }}>
                 <p className="message-content">{content}</p>
             </Emojify>
         </ListItem>
