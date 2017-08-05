@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Poll } from './';
 import { loadPolls } from '../../actions/poll';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -23,9 +22,11 @@ class PollsList extends Component {
             return (
                 <List>
                     {this.props.polls.map(poll => {
+                        const voters = poll.voters.map(voter => voter.username);
+                        const hasAlreadyVoted = voters.includes(this.props.username);
                         return (
                             <Link key={poll._id} to={`/polls/${poll._id}`}>
-                                <ListItem>
+                                <ListItem leftIcon={hasAlreadyVoted ? <i className="material-icons">check_circle</i> : <i className="material-icons">radio_button_unchecked</i>}>
                                     {poll.title}
                                 </ListItem>
                             </Link>
@@ -37,7 +38,7 @@ class PollsList extends Component {
     }
 }
 
-const mapStateToProps = (state) => ({ polls: state.polls });
+const mapStateToProps = (state) => ({ username: state.auth.user.username, polls: state.polls });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
     loadPolls
