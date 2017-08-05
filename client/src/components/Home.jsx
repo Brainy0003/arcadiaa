@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { Footer } from './layout';
 import { Grid, Col, Row } from 'react-bootstrap';
 
@@ -26,17 +27,16 @@ const content = [
         <h4 className="title">Présentation du site</h4>
         <List>
           <ListItem>
-            Vous pouvez consultez les règles du clan en cliquant sur <em>Les règles</em> ci-dessous.
+            Vous pouvez consultez les règles du clan en cliquant sur <strong className="emphasis-word">Les règles</strong> <span style={{ textDecoration: 'underline' }}>ci-dessous</span>.
           </ListItem>
           <ListItem>
-            Vous pouvez chatter avec les autres membres du site en cliquant sur <em>Chat</em> ci-dessus.
+            Vous pouvez <Link to="/chat"><strong className="emphasis-word">chatter</strong></Link> avec les autres membres du site.
           </ListItem>
           <ListItem>
-            <p>Vous pouvez participer à des sondages en cliquant sur <em>Sondages</em> ci-dessus.</p>
-            <p>Vous pouvez créer un sondage uniquement si vous êtes chef.</p>
+            Vous pouvez participer à des <Link to="/polls"><strong className="emphasis-word">sondages</strong></Link> et en créer uniquement si vous êtes chef.
           </ListItem>
           <ListItem>
-            Vous pouvez gérer le clan en cliquant sur <em>Gestion du clan</em> uniquement si vous êtes chef.
+            Vous pouvez gérer le clan en cliquant sur <Link to="/management"><strong>Gestion du clan</strong></Link> uniquement si vous êtes chef.
           </ListItem>
         </List>
       </Col>
