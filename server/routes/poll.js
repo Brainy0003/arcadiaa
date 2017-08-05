@@ -36,6 +36,7 @@ router.post('/add', (req, res, next) => {
         author,
         title,
         date,
+        totalVotes: 0,
         answers: buildAnswers(answers)
     });
     poll.save((err, poll) => {
@@ -44,30 +45,39 @@ router.post('/add', (req, res, next) => {
     });
 });
 
-router.post('/vote/:id', function (req, res, next) {
-    var id = req.params.id;
-    var pos = parseInt(req.body.answer);
-    Poll.findById(id, function (err, poll) {
-        if (err) throw err;
-        // If the user currently logged has not voted for this poll yet
-        var hasVoted = false;
-        if (poll.voters.indexOf(req.user.username) === -1) {
-            poll.voters.push(req.user.username);
-            hasVoted = true;
-        }
-        // We check if someone has voted
-        if (hasVoted) {
-            poll.answers[pos].vote += 1;
-            // Tell mongoose answers has been modified
-            poll.markModified('answers');
-            poll.save(function (err, result) {
-                if (err) throw err;
-                res.redirect('/poll/' + id);
+router.post('/vote/:id', (req, res, next) => {
+    const id = req.params.id;
+    const {
+        username,
+        pos
+    } = req.body;
+    Poll.findById(id, (err, poll) => {
+        if (err) return next(err);
+        const voters = poll.voters.map(voter => voter.username);
+        const indexVoter = voters.indexOf(username);
+        if (indexVoter === -1) {
+            poll.voters.push({
+                username,
+                pos
             });
+            poll.answers[pos].vote += 1;
         } else {
-            req.flash('error', "Vous avez déjà voté");
-            res.redirect('/poll/' + id);
+            const posPreviousAnswerVoter = poll.voters[indexVoter].pos;
+            poll.answers[posPreviousAnswerVoter].vote -= 1;
+            poll.answers[pos].vote += 1;
+            poll.voters[indexVoter] = {
+                username,
+                pos
+            };
+            poll.markModified('voters');
         }
+        poll.totalVotes = poll.calculateVotes(poll.answers)
+        // Tell mongoose answers has been modified
+        poll.markModified('answers');
+        poll.save((err, result) => {
+            if (err) return next(err);
+            res.json(result);
+        });
     });
 });
 

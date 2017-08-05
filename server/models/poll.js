@@ -12,7 +12,8 @@ const pollSchema = new Schema({
     },
     date: Date,
     author: String,
-    voters: Array
+    voters: Array,
+    totalVotes: Number
 });
 
 pollSchema.methods.calculateVotes = (answers) => {

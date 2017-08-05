@@ -1,6 +1,7 @@
 import {
     ADD_POLL,
-    LOAD_POLLS
+    LOAD_POLLS,
+    VOTE_POLL
 } from '../actions/poll';
 
 const polls = (state = [], action) => {
@@ -9,6 +10,20 @@ const polls = (state = [], action) => {
             return [action.poll].concat(state);
         case LOAD_POLLS:
             return action.polls;
+        case VOTE_POLL:
+            let poll;
+            let index;
+            for (let i = 0; i < state.length; i++) {
+                if (state[i]._id === action.poll._id) {
+                    poll = state[i];
+                    index = i;
+                }
+            }
+            return [
+                ...state.slice(0, index),
+                action.poll,
+                ...state.slice(index + 1)
+            ];
         default:
             return state;
     }
