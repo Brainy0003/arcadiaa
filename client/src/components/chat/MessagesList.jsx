@@ -8,7 +8,7 @@ const roomDescription = {
     'deck': 'Parlez stratégie. Quel deck utilisez-vous ?',
     'chief': 'Ici, ça ne rigole pas. Nous devons prendre des décisions importantes pour la pérennité de notre clan.',
     'bug': 'Vous avez trouvé un bug (que ce soit orthographe, problème d\'affichage, etc). Signalez le ici !',
-    'feature': 'Faites part de vos idées de génie ici pour améliorer cette application'
+    'feature': 'Faites part de vos idées de génie ici pour améliorer cette application!'
 };
 
 class MessagesList extends Component {
