@@ -116,7 +116,7 @@ class Poll extends Component {
                     </Row>
                     <Snackbar
                         open={alreadySelected !== -1 && this.state.firstLoad}
-                        message="Vous avez voté pour ce sondage. Néanmoins vous pouvez changer votre vote !"
+                        message="Astuce : vous pouvez changer votre vote !"
                         autoHideDuration={4000}
                         onRequestClose={this.handleRequestClose}
                     />
