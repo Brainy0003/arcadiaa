@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
 import { Header } from './layout';
 import { Signin, Signup } from './authentication';
@@ -7,6 +7,7 @@ import Chat from './chat/Chat';
 import { PollsContainer, Poll } from './polls';
 import Profile from './profile/Profile';
 import Management from './management/Management';
+import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import store from '../configureStore';
 import { Provider } from 'react-redux';
@@ -19,14 +20,17 @@ const App = () => (
             <Router>
                 <div className="app-container">
                     <Header />
-                    <Route exact path="/" component={Home} />
-                    <PrivateRoute path="/chat" component={Chat} />
-                    <PrivateRoute exact path="/polls" component={PollsContainer} />
-                    <PrivateRoute path="/management" component={Management} />
-                    <PrivateRoute path="/polls/:pollId" component={Poll} />
-                    <PrivateRoute path="/profile" component={Profile} />
-                    <Route path="/signin" component={Signin} />
-                    <Route path="/signup" component={Signup} />
+                    <Switch>
+                        <Route exact path="/" component={Home} />
+                        <PrivateRoute path="/chat" component={Chat} />
+                        <PrivateRoute exact path="/polls" component={PollsContainer} />
+                        <PrivateRoute path="/management" component={Management} />
+                        <PrivateRoute path="/polls/:pollId" component={Poll} />
+                        <PrivateRoute path="/profile" component={Profile} />
+                        <Route path="/signin" component={Signin} />
+                        <Route path="/signup" component={Signup} />
+                        <Route component={NotFound} />
+                    </Switch>
                 </div>
             </Router>
         </MuiThemeProvider>
