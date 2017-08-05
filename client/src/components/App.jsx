@@ -4,8 +4,9 @@ import Home from './Home';
 import { Header } from './layout';
 import { Signin, Signup } from './authentication';
 import Chat from './chat/Chat';
-import PollsContainer from './polls/PollsContainer';
+import { PollsContainer, Poll } from './polls';
 import Profile from './profile/Profile';
+import Management from './management/Management';
 import PrivateRoute from './PrivateRoute';
 import store from '../configureStore';
 import { Provider } from 'react-redux';
@@ -20,7 +21,9 @@ const App = () => (
                     <Header />
                     <Route exact path="/" component={Home} />
                     <PrivateRoute path="/chat" component={Chat} />
-                    <PrivateRoute path="/polls" component={PollsContainer} />
+                    <PrivateRoute exact path="/polls" component={PollsContainer} />
+                    <PrivateRoute path="/management" component={Management} />
+                    <PrivateRoute path="/polls/:pollId" component={Poll} />
                     <PrivateRoute path="/profile" component={Profile} />
                     <Route path="/signin" component={Signin} />
                     <Route path="/signup" component={Signup} />
