@@ -20,12 +20,16 @@ const chatServer = (io) => {
       io.emit('add message', message);
     });
 
-    socket.on('switch room', function (room) {
+    socket.on('switch room', (room) => {
       socket.leave(socket.room);
       socket.join(room);
       socket.emit('switch room', room);
       socket.room = room;
     });
+
+    socket.on('disconnect', () => {
+      console.log('Disconnecting...')
+    })
   });
 };
 
