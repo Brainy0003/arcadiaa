@@ -36,13 +36,16 @@ const content = [
             Vous pouvez participer à des <Link to="/polls"><strong className="emphasis-word">sondages</strong></Link> et en créer uniquement si vous êtes chef.
           </ListItem>
           <ListItem>
-            Vous pouvez gérer le clan en cliquant sur <Link to="/management"><strong>Gestion du clan</strong></Link> uniquement si vous êtes chef.
+            Vous pouvez gérer le clan en cliquant sur <Link to="/management"><strong>Gestion</strong></Link> uniquement si vous êtes chef.
           </ListItem>
         </List>
       </Col>
       <Col sm={12}>
         <h4 className="title">Autres</h4>
         <List>
+          <ListItem>
+            Vous pouvez consulter vos jokers en cliquant <a href="https://docs.google.com/spreadsheets/d/1QCBr09QXwc25PgLwe4im9CAlc8eNvN4iHpfddlQZyLQ/edit#gid=0">ici</a>
+          </ListItem>
           <ListItem>
             <p>Ce site a été conçu par un unique développeur. Il est donc possible qu'il y ait quelques bugs.</p>
             <p>Si vous en trouvez un, n'hésitez pas à le signaler dans le chat pour les bugs.</p>
@@ -117,10 +120,13 @@ class Home extends Component {
   }
 
   render() {
+    const message = this.props.location.state;
+    console.log(message);
     const contentToShow = content[this.state.selected];
     return (
       <div>
         <Grid fluid>
+          {message && <p className="title text-center">{message.message}</p>}
           <Row>
             <Col sm={10} smOffset={1}>
               <Paper className="home-container" zDepth={2}>
