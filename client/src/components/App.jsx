@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './Home';
-import { Header } from './layout';
+import { Header, Footer } from './layout';
 import { Signin, Signup } from './authentication';
 import Chat from './chat/Chat';
 import { PollsContainer, Poll } from './polls';
@@ -10,6 +10,7 @@ import Management from './management/Management';
 import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import store from '../configureStore';
+import FlashMessagesList from './flash/FlashMessagesList';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import '../styles/app.css';
@@ -31,6 +32,8 @@ const App = () => (
                         <Route path="/signup" component={Signup} />
                         <Route component={NotFound} />
                     </Switch>
+                    <FlashMessagesList/>
+                    <Footer/>
                 </div>
             </Router>
         </MuiThemeProvider>

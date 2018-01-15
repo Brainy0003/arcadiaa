@@ -5,6 +5,8 @@ import { loadChatData } from '../../actions/chat';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Loader from '../Loader';
+
 const roomDescription = {
     'general': 'Général désigne aussi salle bordélique car ici on parle de tout.',
     'deck': 'Parlez stratégie. Quel deck utilisez-vous ?',
@@ -22,9 +24,7 @@ class Chat extends Component {
         const room = this.props.currentRoom ? this.props.currentRoom : 'general';
         if (!this.props.messages || !this.props.users) {
             return (
-                <div className="app-container">
-                    <h5 className="title text-center">Chargement...</h5>
-                </div>
+                <Loader/>
             );
         } else {
             return (

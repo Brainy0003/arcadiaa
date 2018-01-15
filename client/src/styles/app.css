@@ -1,8 +1,13 @@
 /* general */
 
-body,
 html {
-    height: 100%;
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin: 0;
+    padding: 0;
 }
 
 * {
@@ -15,7 +20,7 @@ html {
 }
 
 .app-container {
-    height: 100%;
+    margin-bottom: 150px;
 }
 
 
@@ -65,10 +70,6 @@ html {
     align-items: center;
 }
 
-.app-container-chat {
-    height: 90%;
-}
-
 .add-message-container {
     display: flex;
     justify-content: space-around;
@@ -87,16 +88,17 @@ html {
     float: right;
 }
 
-.messages-list {
-    height: 80%;
-    overflow: auto;
-}
-
 .message-author {
     margin-left: 10px;
     font-family: Roboto;
     font-weight: 500;
 }
+
+.messages-list {
+    height: 60vh;
+    overflow: auto;
+}
+
 
 /* management */
 
@@ -152,16 +154,20 @@ html {
 /* footer */
 
 footer {
-    margin-top: 10px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    background-color: #2e3035;
+    padding: 20px 0px;
 }
 
-.footer-link {
-    margin: 0px 5px;
-    color: black;
+footer h6 {
+    color: white;
 }
 
-.footer-link:focus,
-.footer-link:hover,
-.footer-link:active {
-    color: black;
+footer a,
+footer a:hover {
+    text-decoration: none;
+    color: white;
+    margin: 0px 20px;
 }

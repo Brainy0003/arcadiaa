@@ -128,10 +128,7 @@ class Management extends Component {
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {this
-                                .props
-                                .clan
-                                .members
+                            {members
                                 .map((member, i) => <MemberTable key={i} data={member}/>)}
                         </TableBody>
                     </Table>

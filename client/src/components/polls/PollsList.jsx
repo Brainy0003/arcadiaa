@@ -4,7 +4,10 @@ import { loadPolls } from '../../actions/poll';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
+import Loader from '../Loader';
+
 import { List, ListItem } from 'material-ui/List';
+
 
 class PollsList extends Component {
     componentDidMount() {
@@ -14,9 +17,7 @@ class PollsList extends Component {
     render() {
         if (!this.props.polls) {
             return (
-                <div className="app-container">
-                    <h5 className="title text-center">Chargement...</h5>
-                </div>
+                <Loader/>
             );
         } else {
             return (

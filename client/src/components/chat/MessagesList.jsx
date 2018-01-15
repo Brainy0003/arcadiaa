@@ -20,7 +20,7 @@ class MessagesList extends Component {
         const room = this.props.currentRoom ? this.props.currentRoom : 'general';
         let messages = this.props.messages.filter(message => message.room === room);
         return (
-            <div className="app-container">
+            <div>
                 <div className="messages-list">
                     <List>
                         {messages.map(message => {

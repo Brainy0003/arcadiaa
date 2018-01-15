@@ -1,5 +1,7 @@
 import axios from 'axios';
-import store from '../configureStore';
+import store, {
+    flash
+} from '../configureStore';
 
 export const SIGNIN_FAILURE = 'SIGNIN_FAILURE';
 export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
@@ -14,15 +16,17 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 const token = localStorage.getItem('jwt');
 if (token) {
     axios.defaults.headers.common['Authorization'] = `JWT ${token}`;
-    axios.post('/api/auth/decodeToken', {
-        token
-    }).then(response => {
-        const user = response.data;
-        store.dispatch({
-            type: AUTH_USER,
-            user
+    axios
+        .post('/api/auth/decodeToken', {
+            token
+        })
+        .then(response => {
+            const user = response.data;
+            store.dispatch({
+                type: AUTH_USER,
+                user
+            });
         });
-    });
 }
 
 /* signup */
@@ -67,6 +71,7 @@ export const signin = (username, password) => {
         const onSuccess = (data) => {
             localStorage.setItem('jwt', data.token);
             axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
+            flash('test');
             return {
                 type: SIGNIN_SUCCESS,
                 user: data.user

@@ -91,6 +91,9 @@ const content = [
           <ListItem>
             Entre 10 et 20 couronnes : vous ne perdrez pas de jokers si le coffre de clan est fini avant la date limite.
           </ListItem>
+          <ListItem>
+            Lorsque vous ne jouez pas deux coffres de clan à la suite, vous perdez 2 jokers au lieu d'un.
+          </ListItem>
         </List>
       </Col>
       <Col sm={12}>
@@ -121,7 +124,6 @@ class Home extends Component {
 
   render() {
     const message = this.props.location.state;
-    console.log(message);
     const contentToShow = content[this.state.selected];
     return (
       <div>

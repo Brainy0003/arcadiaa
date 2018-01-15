@@ -1,8 +1,7 @@
 import React from 'react';
 
-import {
-    TableHeaderColumn
-} from 'material-ui/Table';
+import {TableHeaderColumn} from 'material-ui/Table';
+import Badge from 'material-ui/Badge';
 
 const HeaderTable = ({name, selected, isReversed, translation, handleSelect}) => (
     <TableHeaderColumn
@@ -10,13 +9,14 @@ const HeaderTable = ({name, selected, isReversed, translation, handleSelect}) =>
         ? 'selected'
         : ''}
         onClick={() => handleSelect(name)}>
-        {translation} {selected === name
-        ? (
-                <span className="float-right badge badge-secondary">{isReversed
-                        ? 'Décroissant'
-                        : 'Croissant'}</span>
-            )
-            : null
+        {translation}
+        {selected === name
+            ? (<Badge
+                badgeContent={isReversed
+                ? 'Décroissant'
+                : 'Croissant'}
+                primary={true}/>)
+            : null}
 }
     </TableHeaderColumn>
 );
