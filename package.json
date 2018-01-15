@@ -4,7 +4,7 @@
     "private": true,
     "scripts": {
         "start": "babel-node index.js",
-        "heroku-postbuild": "cd client && yarn --production=false && yarn run build",
+        "heroku-postbuild": "cd client && npm install --production=false && npm run build",
         "dev": "nodemon --ignore ./client --exec babel-node -- ./index.js",
         "test": "mocha test/*.js --require babel-register"
     },
