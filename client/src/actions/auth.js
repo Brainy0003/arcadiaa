@@ -36,6 +36,7 @@ export const signup = (username, password, passwordVerification) => {
         const onSuccess = (data) => {
             localStorage.setItem('jwt', data.token);
             axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
+            flash('Vous êtes bien inscrit!');
             return {
                 type: SIGNUP_SUCCESS,
                 user: data.user
@@ -71,7 +72,7 @@ export const signin = (username, password) => {
         const onSuccess = (data) => {
             localStorage.setItem('jwt', data.token);
             axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
-            flash('test');
+            flash('Vous êtes bien connecté!');
             return {
                 type: SIGNIN_SUCCESS,
                 user: data.user
@@ -103,6 +104,7 @@ export const signin = (username, password) => {
 
 export const signout = () => {
     localStorage.removeItem('jwt');
+    flash('Au revoir!');
     return {
         type: SIGNOUT
     };
