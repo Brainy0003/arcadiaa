@@ -11,13 +11,12 @@ const HeaderTable = ({name, selected, isReversed, translation, handleSelect}) =>
         onClick={() => handleSelect(name)}>
         {translation}
         {selected === name
-            ? (<Badge
-                badgeContent={isReversed
-                ? 'Décroissant'
-                : 'Croissant'}
-                primary={true}/>)
+            ? (
+                <span className="badge badge-secondary">{isReversed
+                        ? 'Décroissant'
+                        : 'Croissant'}</span>
+            )
             : null}
-}
     </TableHeaderColumn>
 );
 
