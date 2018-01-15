@@ -8,13 +8,15 @@ import thunk from 'redux-thunk';
 import {
     auth,
     chat,
-    polls
+    polls,
+    clan
 } from './reducers';
 
 const store = createStore(combineReducers({
     auth,
     chat,
-    polls
+    polls,
+    clan
 }), applyMiddleware(logger, thunk));
 
 export default store;

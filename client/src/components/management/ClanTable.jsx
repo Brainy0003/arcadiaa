@@ -1,18 +1,10 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
 
 import Loader from '../Loader';
-import HeaderTable from './HeaderTable';
+import TableHeader from './TableHeader';
 import MemberTable from './MemberTable';
-
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableRow
-} from 'material-ui/Table';
 
 import {loadClanData} from '../../actions/clan';
 
@@ -23,7 +15,7 @@ const rolePriorities = {
     'leader': 4
 };
 
-class Management extends Component {
+class ClanTable extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -86,11 +78,8 @@ class Management extends Component {
     }
 
     render() {
-        if (!this.props.isChief) {
-            return (<Redirect to="/"/>);
-        }
         if (Object.keys(this.props.clan).length === 0) {
-            return <Loader />
+            return (<Loader/>);
         } else {
             const membersSorted = this.sortArray(this.props.clan.members);
             const members = this.state.reverse
@@ -114,39 +103,39 @@ class Management extends Component {
             ];
 
             return (
-                <div>
-                    <Table>
-                        <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
-                            <TableRow>
-                            {tableHeaders.map((header, i) => <HeaderTable
-                                key={i}
-                                name={header.name}
-                                translation={header.translation}
-                                selected={this.state.selected}
-                                handleSelect={this.handleSelect}
-                                isReversed={this.state.reverse}/>)}
-                            </TableRow>
-                        </TableHeader>
-                        <TableBody>
-                            {this
-                                .props
-                                .clan
-                                .members
-                                .map((member, i) => <MemberTable key={i} data={member}/>)}
-                        </TableBody>
-                    </Table>
+                <div className="main">
+                    <h2 className="display-3 my-4 text-center">ArcadiaA</h2>
+                    <div className="container table-responsive-sm">
+                        <table className="table">
+                            <thead>
+                                <tr>
+                                    {tableHeaders.map((header, i) => <TableHeader
+                                        key={i}
+                                        name={header.name}
+                                        translation={header.translation}
+                                        selected={this.state.selected}
+                                        handleSelect={this.handleSelect}
+                                        isReversed={this.state.reverse}/>)}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {members
+                                    .map((member, i) => <MemberTable key={i} data={member}/>)}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             );
         }
     }
 }
 
-const mapStateToProps = (state) => ({isChief: state.auth.user.isChief, clan: state.clan});
+const mapStateToProps = (state) => ({clan: state.clan});
 
 const mapDispatchToProps = dispatch => bindActionCreators({
     loadClanData
 }, dispatch);
 
-Management = connect(mapStateToProps, mapDispatchToProps)(Management)
+ClanTable = connect(mapStateToProps, mapDispatchToProps)(ClanTable);
 
-export default Management;
+export default ClanTable;

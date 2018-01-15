@@ -98,6 +98,20 @@ html {
     font-weight: 500;
 }
 
+/* management */
+
+.row-danger {
+    background-color: #fc775f;
+}
+
+.row-warning {
+    background-color: #ffa20c;
+}
+
+.row-success {
+    background-color: #0ad864;
+}
+
 
 /* auth */
 

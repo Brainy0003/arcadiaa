@@ -46,6 +46,7 @@ import clashroyale from './server/routes/clashroyale';
 import profile from './server/routes/profile';
 import user from './server/routes/user';
 import poll from './server/routes/poll';
+import clan from './server/routes/clan';
 
 /* routes config */
 
@@ -55,6 +56,7 @@ app.use('/api/clashroyale', clashroyale);
 app.use('/api/profile', profile);
 app.use('/api/user', user);
 app.use('/api/poll', poll);
+app.use('/api/clan', clan);
 
 /* redirect all unmatched routes to homepage */
 app.get('*', (req, res) => {
