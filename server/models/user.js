@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcrypt-nodejs';
+
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema({
@@ -13,15 +14,18 @@ const userSchema = new Schema({
   },
   isChief: Boolean,
   avatar: String,
-  joker: Number,
-  googleId: String
+  joker: Number
 });
 
 userSchema.pre('save', function (next) {
   const user = this;
+
   if (!user.isModified('password')) return next();
-  user.password = bcrypt.hashSync(user.password, 10);
-  next();
+
+  const salt = bcrypt.genSaltSync(10);
+  user.password = bcrypt.hashSync(user.password, salt);
+
+  return next();
 });
 
 userSchema.methods.validPassword = function (password) {
