@@ -1,7 +1,6 @@
 import React from 'react';
 
 import {TableHeaderColumn} from 'material-ui/Table';
-import Badge from 'material-ui/Badge';
 
 const HeaderTable = ({name, selected, isReversed, translation, handleSelect}) => (
     <TableHeaderColumn
