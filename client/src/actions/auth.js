@@ -1,109 +1,80 @@
 import axios from 'axios';
+import jwt from 'jsonwebtoken';
 import store, {
     flash
 } from '../configureStore';
 
-export const SIGNIN_FAILURE = 'SIGNIN_FAILURE';
-export const SIGNIN_SUCCESS = 'SIGNIN_SUCCESS';
-export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
-export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNOUT = 'SIGNOUT';
 export const AUTH_USER = 'AUTH_USER';
+export const AUTH_FAILURE = 'AUTH_FAILURE';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
-
-/* authenticate user if one token already exists */
 
 const token = localStorage.getItem('jwt');
 if (token) {
     axios.defaults.headers.common['Authorization'] = `JWT ${token}`;
-    axios
-        .post('/api/auth/decodeToken', {
-            token
-        })
-        .then(response => {
-            const user = response.data;
-            store.dispatch({
-                type: AUTH_USER,
-                user
-            });
-        });
+    store.dispatch({
+        type: AUTH_USER,
+        user: jwt.decode(token)
+    });
 }
 
 /* signup */
 
-export const signup = (username, password, passwordVerification) => {
-    return async dispatch => {
-        const onSuccess = (data) => {
-            localStorage.setItem('jwt', data.token);
-            axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
-            flash('Vous êtes bien inscrit!');
-            return {
-                type: SIGNUP_SUCCESS,
-                user: data.user
-            };
-        }
-        const onFailure = (error, field) => ({
-            type: SIGNUP_FAILURE,
-            error,
-            field
-        });
-        try {
-            const response = await axios.post('/api/auth/signup', {
-                username,
-                password,
-                passwordVerification
+export const signup = ({username, password, passwordVerification}) => dispatch => {
+    axios
+        .post('/api/auth/signup', {
+            username,
+            password,
+            passwordVerification
+        })
+        .then(response => {
+            const token = response.data;
+            localStorage.setItem('jwt', token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            dispatch({
+                type: AUTH_USER,
+                user: jwt.decode(token)
             });
-            const data = response.data;
-            if (data.error) {
-                dispatch(onFailure(data.error, data.field))
-            } else {
-                dispatch(onSuccess(data))
-            }
-        } catch (error) {
-            return error;
-        }
-    }
+            flash('Bienvenue!');
+        })
+        .catch(error => {
+            dispatch({
+                type: AUTH_FAILURE,
+                errors: error.response.data
+            });
+        });
 }
 
 /* signin */
 
-export const signin = (username, password) => {
-    return async dispatch => {
-        const onSuccess = (data) => {
-            localStorage.setItem('jwt', data.token);
-            axios.defaults.headers.common['Authorization'] = `JWT ${data.token}`;
-            flash('Vous êtes bien connecté!');
-            return {
-                type: SIGNIN_SUCCESS,
-                user: data.user
-            }
-        }
-        const onFailure = (error, field) => ({
-            type: SIGNIN_FAILURE,
-            error,
-            field
+export const signin = ({username, password}) => dispatch => {
+    axios
+        .post('/api/auth/signin', {
+            username,
+            password
         })
-        try {
-            const response = await axios.post('/api/auth/signin', {
-                username,
-                password
+        .then(response => {
+            const token = response.data;
+            localStorage.setItem('jwt', token);
+            axios.defaults.headers.common['Authorization'] = `JWT ${token}`;
+            dispatch({
+                type: AUTH_USER,
+                user: jwt.decode(token)
             });
-            const data = response.data;
-            if (data.error) {
-                dispatch(onFailure(data.error, data.field))
-            } else {
-                dispatch(onSuccess(data))
-            }
-        } catch (error) {
-            return error;
-        }
-    }
+            flash('Bonjour!');
+        }).catch(error => {
+            dispatch({
+                type: AUTH_FAILURE,
+                errors: error.response.data
+            });
+        });
 }
 
 /* signout */
 
 export const signout = () => {
     localStorage.removeItem('jwt');
+    delete axios.defaults.headers.common['Authorization'];
     flash('Au revoir!');
     return {
         type: SIGNOUT

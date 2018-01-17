@@ -1,12 +1,16 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import passport from 'passport';
+import {
+  check,
+  validationResult
+} from 'express-validator/check';
+import {
+  matchedData
+} from 'express-validator/filter';
+
 import User from '../models/user';
 import config from '../config';
-
-const router = new express.Router();
-
-const generateToken = (user) => jwt.sign(user, config.secret);
 
 export const setUserInfo = (user) => ({
   id: user.id,
@@ -15,116 +19,121 @@ export const setUserInfo = (user) => ({
   avatar: user.avatar
 });
 
-router.post('/decodeToken', (req, res, next) => {
-  if (req.body.token) {
-    const {
-      id
-    } = jwt.decode(req.body.token);
-    User.findById(id, (err, foundUser) => {
-      if (err) return next(err);
-      return res.json(setUserInfo(foundUser));
-    });
-  }
-});
+const router = new express.Router();
 
-router.post('/signin', (req, res, next) => {
-  const username = req.body.username.trim().toLowerCase();
-  const password = req.body.password.trim();
-  if (!username) {
-    return res.json({
-      error: `Ce champ n'est pas rempli`,
-      field: 'username'
-    });
-  }
-  if (!password) {
-    return res.json({
-      error: `Ce champ n'est pas rempli`,
-      field: 'password'
-    });
-  }
-  User.findOne({
-    username
-  }, (err, user) => {
-    if (err) {
-      return next(err)
-    }
-    if (!user) {
-      return res.json({
-        error: `Aucun utilisateur n'a été trouvé`,
-        field: 'username'
-      });
-    } else {
-      let token = generateToken(setUserInfo(user));
-      return user.validPassword(password) ?
-        res.json({
-          token,
-          user: jwt.decode(token)
-        }) :
-        res.json({
-          error: 'Mot de passe incorrect',
-          field: 'password'
-        });
-    }
-  });
-});
+const generateToken = (user) => jwt.sign(setUserInfo(user), config.secret);
 
-router.post('/signup', function (req, res, next) {
-  const username = req.body.username.trim().toLowerCase();
-  const password = req.body.password.trim();
-  const passwordVerification = req.body.passwordVerification.trim();
-  if (!username) {
-    return res.json({
-      error: `Ce champ n'est pas rempli`,
-      field: 'username'
-    });
+router.post('/signin', [
+  check('username')
+  .isLength({
+    min: 2
+  })
+  .withMessage('Votre pseudo doit avoir au moins 2 caractères')
+  .trim(),
+  check('password')
+  .isLength({
+    min: 4
+  })
+  .withMessage('Votre mot de passe doit avoir au moins 4 caractères')
+  .trim()
+], (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(422)
+      .json(errors.mapped())
   }
-  if (!password) {
-    return res.json({
-      error: `Ce champ n'est pas rempli`,
-      field: 'password'
-    });
-  }
-  if (!passwordVerification) {
-    return res.json({
-      error: `Ce champ n'est pas rempli`,
-      field: 'passwordVerification'
-    });
-  }
-  if (password !== passwordVerification) {
-    return res.json({
-      error: 'Les mots de passe sont différents',
-      field: 'passwordVerification'
-    });
-  }
-  User.findOne({
-    username: username
-  }, (err, existingUser) => {
-    if (err) {
-      return next(err);
-    }
-    if (existingUser) {
-      return res.json({
-        error: `Ce nom d'utilisateur est déjà utilisé`,
-        field: 'username'
-      });
-    }
-    let user = new User({
-      username,
-      password,
-      isChief: false,
-      avatar: 'giant'
-    });
-    user.save((err, user) => {
-      if (err) {
-        return next(err);
+
+  const {
+    username,
+    password
+  } = matchedData(req);
+
+  User
+    .findOne({
+      username
+    })
+    .then(user => {
+      if (!user) {
+        return res
+          .status(401)
+          .json({
+            username: {
+              msg: 'Aucun utilisateur trouvé',
+              param: 'username'
+            }
+          });
+      } else {
+        return user.validPassword(password) ?
+          res
+          .status(200)
+          .json(generateToken(user)) :
+          res
+          .status(403)
+          .json({
+            password: {
+              msg: 'Mot de passe incorrect',
+              param: 'password'
+            }
+          });
       }
-      let token = generateToken(setUserInfo(user));
-      return res.json({
-        token,
-        user: jwt.decode(token)
-      });
     });
+});
+
+router.post('/signup', [
+  check('username')
+  .isLength({
+    min: 2
+  })
+  .withMessage('must have at least 2 characters')
+  .custom(value => {
+    return User
+      .findOne({
+        username: value
+      })
+      .then(user => {
+        if (user) {
+          throw new Error('Username already taken');
+        } else {
+          return true;
+        }
+      })
+  })
+  .trim(),
+  check('password')
+  .isLength({
+    min: 4
+  })
+  .withMessage('must have at least 4 characters')
+  .trim(),
+  check('passwordVerification').custom((value, {
+    req
+  }) => value === req.body.password).withMessage('Both passwords should be the same')
+], (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res
+      .status(422)
+      .json(errors.mapped());
+  }
+
+  const {
+    username,
+    password,
+    passwordVerification
+  } = matchedData(req);
+
+  let userToCreate = new User({
+    username,
+    password,
+    avatar: 'giant',
+    isChief: false
   });
+  userToCreate
+    .save()
+    .then(user => res.json(generateToken(user)));
 });
 
 export default router;

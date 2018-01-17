@@ -1,9 +1,9 @@
 import {applyMiddleware, combineReducers, createStore} from 'redux';
 import logger from 'redux-logger';
 import thunk from 'redux-thunk';
-import {auth, chat, polls, clan, messages} from './reducers';
+import {auth, chat, polls, clan, messages, errors} from './reducers';
 
-const store = createStore(combineReducers({auth, chat, polls, clan, messages}), applyMiddleware(logger, thunk));
+const store = createStore(combineReducers({auth, chat, polls, clan, messages, errors}), applyMiddleware(logger, thunk));
 
 let nextFlashId = 0;
 
