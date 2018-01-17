@@ -11,6 +11,7 @@ import NotFound from './NotFound';
 import PrivateRoute from './PrivateRoute';
 import store from '../configureStore';
 import FlashMessagesList from './flash/FlashMessagesList';
+import withRedirect from './withRedirect';
 import { Provider } from 'react-redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import '../styles/app.css';
@@ -28,8 +29,8 @@ const App = () => (
                         <PrivateRoute path="/management" component={Management} />
                         <PrivateRoute path="/polls/:pollId" component={Poll} />
                         <PrivateRoute path="/profile" component={Profile} />
-                        <Route path="/signin" component={Signin} />
-                        <Route path="/signup" component={Signup} />
+                        <Route path="/signin" component={withRedirect(Signin)} />
+                        <Route path="/signup" component={withRedirect(Signup)} />
                         <Route component={NotFound} />
                     </Switch>
                     <FlashMessagesList/>
