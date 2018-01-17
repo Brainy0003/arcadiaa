@@ -36,9 +36,7 @@ const cleanArray = (arr) => {
 
 const buildAnswers = (answers) => {
     const answersArray = answers.split(',');
-    console.log(answersArray)
     const cleanAnswersArray = cleanArray(answersArray);
-    console.log(cleanAnswersArray);
     let answersBuilt = cleanAnswersArray.map((answer, i) => ({
         'answer': answer.trim(),
         'vote': 0,
