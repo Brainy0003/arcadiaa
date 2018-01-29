@@ -12,7 +12,7 @@ const HeaderTable = ({name, selected, isReversed, translation, handleSelect}) =>
         {translation}
         {selected === name
             ? (
-                <span className="badge badge-secondary">{isReversed
+                <span className="badge badge-secondary" style={{marginLeft: '10px'}}>{isReversed
                         ? 'Décroissant'
                         : 'Croissant'}</span>
             )

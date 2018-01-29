@@ -8,7 +8,7 @@ import {
 const classNameBasedOnCrowns = (clanChestCrowns) => {
     if (clanChestCrowns < 10) {
         return 'row-danger';
-    } else if (clanChestCrowns >= 10 && clanChestCrowns < 20) {
+    } else if (clanChestCrowns >= 10 && clanChestCrowns <= 24) {
         return 'row-warning';
     } else {
         return 'row-success';
@@ -23,6 +23,7 @@ const translateRole = {
 };
 
 const MemberTable = ({
+    index,
     data: {
         name,
         role,
@@ -32,6 +33,7 @@ const MemberTable = ({
     }
 }) => (
     <TableRow className={classNameBasedOnCrowns(clanChestCrowns)}>
+        <TableRowColumn>{index}</TableRowColumn>    
         <TableRowColumn>{name}</TableRowColumn>
         <TableRowColumn>{translateRole[role]}</TableRowColumn>
         <TableRowColumn>{trophies}</TableRowColumn>

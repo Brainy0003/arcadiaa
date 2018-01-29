@@ -7,12 +7,7 @@ import Loader from '../Loader';
 import HeaderTable from './HeaderTable';
 import MemberTable from './MemberTable';
 
-import {
-    Table,
-    TableBody,
-    TableHeader,
-    TableRow
-} from 'material-ui/Table';
+import {Table, TableBody, TableHeader, TableRow, TableHeaderColumn} from 'material-ui/Table';
 
 import {loadClanData} from '../../actions/clan';
 
@@ -90,7 +85,7 @@ class Management extends Component {
             return (<Redirect to="/"/>);
         }
         if (Object.keys(this.props.clan).length === 0) {
-            return <Loader />
+            return <Loader/>
         } else {
             const membersSorted = this.sortArray(this.props.clan.members);
             const members = this.state.reverse
@@ -118,18 +113,18 @@ class Management extends Component {
                     <Table>
                         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                             <TableRow>
-                            {tableHeaders.map((header, i) => <HeaderTable
-                                key={i}
-                                name={header.name}
-                                translation={header.translation}
-                                selected={this.state.selected}
-                                handleSelect={this.handleSelect}
-                                isReversed={this.state.reverse}/>)}
+                                <TableHeaderColumn>Numéro</TableHeaderColumn>
+                                {tableHeaders.map((header, i) => <HeaderTable
+                                    key={i}
+                                    name={header.name}
+                                    translation={header.translation}
+                                    selected={this.state.selected}
+                                    handleSelect={this.handleSelect}
+                                    isReversed={this.state.reverse}/>)}
                             </TableRow>
                         </TableHeader>
                         <TableBody>
-                            {members
-                                .map((member, i) => <MemberTable key={i} data={member}/>)}
+                            {members.map((member, i) => <MemberTable key={i} index={i+1} data={member}/>)}
                         </TableBody>
                     </Table>
                 </div>
