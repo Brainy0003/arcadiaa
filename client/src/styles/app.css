@@ -59,16 +59,6 @@ body {
 
 /* chat */
 
-.chat-header {
-    border-bottom: 2.5px solid grey;
-}
-
-.chat-header-primary {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
 .add-message-container {
     display: flex;
     justify-content: space-around;
@@ -81,10 +71,6 @@ body {
 
 .add-message-input-container {
     width: 95%;
-}
-
-.rooms-container {
-    float: right;
 }
 
 .message-author {
