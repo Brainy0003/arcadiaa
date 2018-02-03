@@ -1,95 +1,88 @@
-import React, {Component} from 'react';
-import {bindActionCreators} from 'redux';
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux';
+import React, { Component } from "react";
+import { bindActionCreators } from "redux";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
-import TextField from 'material-ui/TextField';
-import RaisedButton from 'material-ui/RaisedButton';
+import TextFieldGroup from "./TextFieldGroup";
 
-import {clear} from '../../actions/errors';
+import { clear } from "../../actions/errors";
+
+import { Button } from "react-bootstrap";
 
 class AuthForm extends Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        /**
-         * [{name: 'username', type: 'text', ...}, {name: 'password', ...}] => {username: '', password: '', errors: []}
-         */
-        this.state = Object.assign(...this.props.fields.map(field => ({
-            [field.name]: ''
-        })));
+    this.state = Object.assign(
+      ...this.props.fields.map(field => ({
+        [field.name]: ""
+      }))
+    );
 
-        this.handleChange = this
-            .handleChange
-            .bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
-        this.handleSubmitClick = this
-            .handleSubmitClick
-            .bind(this);
+    this.handleSubmitClick = this.handleSubmitClick.bind(this);
 
-        this.errorFor = this
-            .errorFor
-            .bind(this);
+    this.errorFor = this.errorFor.bind(this);
+  }
+
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.setState({ [name]: value });
+  }
+
+  componentWillUnmount() {
+    this.props.clear();
+  }
+
+  handleSubmitClick() {
+    this.props.clear();
+    this.props.triggerSubmitFunction(this.state);
+  }
+
+  errorFor(field) {
+    if (this.props.errors.hasOwnProperty(field)) {
+      return this.props.errors[field].msg;
     }
+  }
 
-    handleChange(e, element) {
-        const {name, value} = e.target;
-        this.setState({[name]: value});
-    }
-
-    componentWillUnmount() {
-        this
-            .props
-            .clear();
-    }
-
-    handleSubmitClick() {
-        this
-            .props
-            .clear();
-        this
-            .props
-            .triggerSubmitFunction(this.state);
-    }
-
-    errorFor(field) {
-        if (this.props.errors.hasOwnProperty(field)) {
-            return this.props.errors[field].msg;
-        }
-    }
-
-    render() {
-        return (
-            <form>
-                {this
-                    .props
-                    .fields
-                    .map((field, i) => {
-                        return (<TextField
-                            key={i}
-                            hintText={field.placeholder}
-                            floatingLabelText={field.text}
-                            fullWidth
-                            name={field.name}
-                            type={field.type}
-                            errorText={this.errorFor(field.name)}
-                            onChange={this.handleChange}/>)
-                    })}
-                <RaisedButton
-                    label="Envoyer"
-                    primary={true}
-                    fullWidth
-                    onClick={this.handleSubmitClick}/>
-            </form>
-        )
-    }
+  render() {
+    return (
+      <form>
+        <div className="row">
+          {this.props.fields.map((field, i) => (
+            <TextFieldGroup
+              key={i}
+              label={field.text}
+              type={field.type}
+              name={field.name}
+              handleChange={this.handleChange}
+              error={this.errorFor(field.name)}
+            />
+          ))}
+          <Button
+            type="button"
+            bsStyle="primary"
+            block
+            onClick={this.handleSubmitClick}
+          >
+            Envoyer
+          </Button>
+        </div>
+      </form>
+    );
+  }
 }
 
-const mapStateToProps = state => ({errors: state.errors});
+const mapStateToProps = state => ({ errors: state.errors });
 
-const mapDispatchToProps = dispatch => bindActionCreators({
-    clear
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      clear
+    },
+    dispatch
+  );
 
 AuthForm = withRouter(connect(mapStateToProps, mapDispatchToProps)(AuthForm));
 

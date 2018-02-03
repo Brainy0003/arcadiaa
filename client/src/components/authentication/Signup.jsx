@@ -1,7 +1,10 @@
 import React, {Component} from 'react';
 import {signup} from '../../actions/auth';
+import {Link} from "react-router-dom";
 import {bindActionCreators} from 'redux';
 import {connect} from 'react-redux';
+
+import {Grid, Row, Col} from 'react-bootstrap';
 
 import Form from './Form.jsx';
 
@@ -23,13 +26,20 @@ class Signup extends Component {
       }
     ];
     return (
-      <div className="app-container">
-        <div className="row">
-          <div className="col-sm-6 col-sm-offset-3">
+      <Grid>
+        <Row>
+          <Col xs={6} xsOffset={3}>
+            <h2 className="text-center">
+              Inscription
+            </h2>
             <Form fields={fields} triggerSubmitFunction={this.props.signup}/>
-          </div>
-        </div>
-      </div>
+            <hr/>
+            <Link to="/signin" className="text-center">
+              <p className="text-center">Vous avez déjà un compte?</p>
+            </Link>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }
