@@ -96,7 +96,8 @@ class Management extends Component {
                 {
                     name: 'name',
                     translation: 'Pseudo'
-                }, {
+                }, 
+                {
                     name: 'role',
                     translation: 'Rôle'
                 }, {
@@ -114,6 +115,7 @@ class Management extends Component {
                         <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
                             <TableRow>
                                 <TableHeaderColumn>Numéro</TableHeaderColumn>
+                                <TableHeaderColumn>Tag</TableHeaderColumn>
                                 {tableHeaders.map((header, i) => <HeaderTable
                                     key={i}
                                     name={header.name}

@@ -26,6 +26,7 @@ const MemberTable = ({
     index,
     data: {
         name,
+        tag,
         role,
         clanChestCrowns,
         trophies,
@@ -34,6 +35,7 @@ const MemberTable = ({
 }) => (
     <TableRow className={classNameBasedOnCrowns(clanChestCrowns)}>
         <TableRowColumn>{index}</TableRowColumn>    
+        <TableRowColumn>{tag}</TableRowColumn>    
         <TableRowColumn>{name}</TableRowColumn>
         <TableRowColumn>{translateRole[role]}</TableRowColumn>
         <TableRowColumn>{trophies}</TableRowColumn>
